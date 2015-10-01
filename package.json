@@ -1,0 +1,39 @@
+{
+  "name": "react-persian-datepicker",
+  "version": "1.0.0",
+  "description": "A Persian date-picker component for react.js",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mohebifar/react-persian-datepicker.git"
+  },
+  "keywords": [
+    "react",
+    "component",
+    "persian",
+    "jalali",
+    "jalaali",
+    "hijri",
+    "calendar",
+    "datepicker"
+  ],
+  "author": "Mohamad Mohebifar <mohamad@mohebifar.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mohebifar/react-persian-datepicker/issues"
+  },
+  "homepage": "https://github.com/mohebifar/react-persian-datepicker#readme",
+  "dependencies": {
+    "moment-jalaali": "^0.3.8",
+    "react-persian": "^1.0.3"
+  },
+  "peerDependencies": {
+    "react": "^0.13.3"
+  },
+  "devDependencies": {
+    "babel": "^5.8.23"
+  }
+}
