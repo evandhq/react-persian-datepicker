@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>React Persian Datepicker</title>
+    <link rel="stylesheet" href="../css/basic.css"/>
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/fontawesome/4.4.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="css/prism.css"/>
+    <link rel="stylesheet" href="css/main.css"/>
+</head>
+<body>
+<div class="container">
+    <h1>Persian React Date-picker</h1>
+
+    <p><strong><a href="https://github.com/mohebifar/react-persian-datepicker">persian-react-datepicker</a></strong> is
+        <a href="https://facebook.github.io/react">React.js</a> component
+        that helps you to create
+        datepickers based on Persian calendar</p>
+
+    <h2>Installation</h2>
+
+    <p>You can install this package using <code>npm</code>:</p>
+    <pre><code>npm install --save react-persian-datepicker</code></pre>
+    <p>It would be easy to destruct <code>Calendar</code> component from the package:</p>
+    <pre><code>import { Calendar } from 'react-persian-datepicker';</code></pre>
+
+    <h2>Basic Calendar</h2>
+
+    <p>You can create a persian date picker by using the <code>Calendar</code> component. The required
+        <code>props</code> are as
+        following:</p>
+    <ol>
+        <li><strong>onSelect</strong>: Invoked when a date is selected and the <code>moment</code> object will be
+            passed.
+        </li>
+        <li><strong>prevMonth</strong>: The element for navigating to the previous month button.</li>
+        <li><strong>nextMonth</strong>: The element for navigating to the next month button.</li>
+    </ol>
+    <div class="example example-1">
+        <div class="demo" id="basic-calendar"></div>
+        <div class="code">
+            <pre class="language-jsx">const el = document.getElementById('basic-calendar');
+const result = document.getElementById('basic-calendar-result');
+const prev = &lt;i className="fa fa-arrow-left"&gt;&lt;/i&gt;;
+const next = &lt;i className="fa fa-arrow-right"&gt;&lt;/i&gt;;
+const onSelect = date =&gt; {
+    result.textContent = date.format('jD/jMM/jYYYY');
+};
+
+React.render(&lt;Calendar
+    onSelect={onSelect}
+    prevMonthElement={prev}
+    nextMonthElement={next}
+    /&gt;, el);</pre>
+        </div>
+    </div>
+    <p class="result">You selected: <span id="basic-calendar-result">nothing yet</span></p>
+
+    <h2>Default Month</h2>
+
+    <p>You can set the default shown month on the date picker by setting a <code>Date</code> or <code>moment</code>
+        object to <strong><code>month</code></strong> prop:</p>
+
+    <div class="example example-2">
+        <div class="demo" id="default-month-calendar"></div>
+        <div class="code">
+            <pre class="language-jsx">const el = document.getElementById('default-month-calendar');
+const prev = &lt;i className="fa fa-arrow-left"&gt;&lt;/i&gt;;
+const next = &lt;i className="fa fa-arrow-right"&gt;&lt;/i&gt;;
+const onSelect = date =&gt; {
+    console.log(date);
+};
+
+React.render(&lt;Calendar
+    onSelect={onSelect}
+    prevMonthElement={prev}
+    nextMonthElement={next}
+    month={new Date(746641200000)}
+    /&gt;, el);</pre>
+        </div>
+    </div>
+
+    <h2>Minimum and Maximum selectable dates</h2>
+
+    <p>You can restrict selectable dates by using following <code>props</code>:</p>
+    <ol>
+        <li><strong>min</strong>: The minimum selectable date. It can be a <code>Date</code> or <code>moment</code>
+            object.
+        </li>
+        <li><strong>max</strong>: The maximum selectable date. It can be a <code>Date</code> or <code>moment</code>
+            object.
+        </li>
+    </ol>
+
+    <div class="example example-3">
+        <div class="demo" id="min-max-calendar"></div>
+        <div class="code">
+            <pre class="language-jsx">const el = document.getElementById('basic-calendar');
+const prev = &lt;i className="fa fa-arrow-left"&gt;&lt;/i&gt;;
+const next = &lt;i className="fa fa-arrow-right"&gt;&lt;/i&gt;;
+const onSelect = date =&gt; {
+    console.log(date);
+};
+
+React.render(&lt;Calendar
+    onSelect={onSelect}
+    prevMonthElement={prev}
+    nextMonthElement={next}
+    min={new Date()} /* Now (Today) */
+    max={new Date(Date.now() + 85600000 * 10)} /* 10 Days later */
+    /&gt;, el);</pre>
+        </div>
+    </div>
+</div>
+
+<footer><a href="http://mohebifar.mit-license.org/">MIT License</a> - Made by <a href="https://github.com/mohebifar">Mohebifar</a>
+</footer>
+
+<script src="js/build.min.js"></script>
+<script src="js/prism.js"></script>
+<script>
+    Prism.highlightElement(document.querySelector('.example-1 .code pre'), true);
+    Prism.highlightElement(document.querySelector('.example-2 .code pre'), true);
+    Prism.highlightElement(document.querySelector('.example-3 .code pre'), true);
+</script>
+</body>
+</html>
