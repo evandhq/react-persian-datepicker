@@ -1,6 +1,6 @@
 # react-persian-datepicker
 
-**persian-react-datepicker** is React.js component that helps you to create datepickers based on Persian calendar.
+**persian-react-datepicker** is a React.js component that helps you to create datepickers based on Persian calendar.
 
 **[See the demo here](http://mohebifar.github.io/react-persian-datepicker/)**
 
