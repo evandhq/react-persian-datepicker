@@ -37,7 +37,7 @@ export default class Calendar extends React.Component {
   componentWillMount() {
     let month;
     if (this.props.month) {
-      month = this.props.month;
+      month = moment(this.props.month);
     } else {
       month = moment();
     }
