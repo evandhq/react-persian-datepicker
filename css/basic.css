@@ -1,3 +1,7 @@
+.calendar, .calendar * {
+    box-sizing: border-box;
+}
+
 .calendar {
     border-radius: 3px;
     box-shadow: 0 3px 10px #dbdbdb;
@@ -6,15 +10,16 @@
     margin: 30px auto;
     text-align: center;
     padding: 10px;
+    background-color: #fff;
 }
 
 .calendar .heading {
-    height: 30px;
+    height: 35px;
     font-weight: bold;
 }
 
 .calendar .heading > span {
-    line-height: 40px;
+    line-height: 35px;
 }
 
 .calendar .heading .prev-month {
@@ -31,6 +36,7 @@
     margin: 5px;
     border: none;
     width: 40px;
+    height: 32px;
 }
 
 .calendar .heading > button:hover {
