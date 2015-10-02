@@ -1,0 +1,66 @@
+@font-face {
+    font-family: Iranian;
+    font-size: 16px;
+    font-weight: normal;
+    src: url('//raw.githubusercontent.com/font-store/font-Iranian/master/Web-fonts/IranianSans/IranianSansWeb-Regular.woff')
+}
+
+@font-face {
+    font-family: Iranian;
+    font-size: 16px;
+    font-weight: bold;
+    src: url('//raw.githubusercontent.com/font-store/font-Iranian/master/Web-fonts/IranianSans/IranianSansWeb-Bold.woff')
+}
+
+body {
+    margin: 0;
+    font-family: "Source Sans Pro", "Segoe UI", "Helvetica Neue", sans-serif;
+    background-color: #eeeeee;
+}
+
+.calendar, .calendar button {
+    font-family: Iranian;
+}
+
+.container {
+    max-width: 960px;
+    margin: auto;
+}
+
+.example > div {
+    float: left;
+    width: 50%;
+}
+
+.example:after {
+    content: '';
+    clear: both;
+    display: block;
+}
+
+.result {
+    background-color: #fff;
+    box-shadow: 0 0 25px #dbdbdb;
+    border-radius: 30px;
+    padding: 10px;
+    margin: 15px auto;
+    text-align: center;
+    max-width: 300px;
+}
+
+a {
+    color: dodgerblue;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #49a9ff;
+}
+
+footer {
+    text-align: center;
+    margin-top: 30px;
+    line-height: 45px;
+    background-color: #fff;
+    box-shadow: 0 2px 3px #dbdbdb;
+}
