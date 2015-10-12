@@ -50,7 +50,8 @@ export default class Calendar extends React.Component {
     month.locale('fa');
 
     this.state = {
-      month
+      month,
+      selectedDay: false
     };
   }
 
