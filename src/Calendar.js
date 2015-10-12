@@ -20,7 +20,7 @@ const dayOfWeekNames = [
 export default class Calendar extends React.Component {
   static propTypes = {
     startDayOfWeek: PropTypes.number,
-    onSelect: PropTypes.func.isRequired,
+    onSelect: PropTypes.func,
     month: PropTypes.object,
     max: PropTypes.oneOfType([
       PropTypes.object,
@@ -30,8 +30,13 @@ export default class Calendar extends React.Component {
       PropTypes.object,
       PropTypes.string
     ]),
-    prevMonthElement: PropTypes.element.isRequired,
-    nextMonthElement: PropTypes.element.isRequired
+    prevMonthElement: PropTypes.element,
+    nextMonthElement: PropTypes.element
+  };
+
+  static defaultProps = {
+    prevMonthElement: <i className="fa fa-arrow-left"></i>,
+    nextMonthElement: <i className="fa fa-arrow-right"></i>
   };
 
   componentWillMount() {
@@ -63,6 +68,8 @@ export default class Calendar extends React.Component {
 
   handleClick(day) {
     const state = this.state;
+    const { onSelect } = this.props;
+
     if (day.format('jMM') !== state.month.format('jMM')) {
       state.month = day.clone();
     }
@@ -72,7 +79,9 @@ export default class Calendar extends React.Component {
       selectedDay: day
     });
 
-    this.props.onSelect(day);
+    if (onSelect) {
+      onSelect(day);
+    }
   }
 
   render() {

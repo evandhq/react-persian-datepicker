@@ -65,16 +65,8 @@ React.render(&lt;Calendar
         <div class="demo" id="default-month-calendar"></div>
         <div class="code">
             <pre class="language-jsx">const el = document.getElementById('default-month-calendar');
-const prev = &lt;i className="fa fa-arrow-left"&gt;&lt;/i&gt;;
-const next = &lt;i className="fa fa-arrow-right"&gt;&lt;/i&gt;;
-const onSelect = date =&gt; {
-    console.log(date);
-};
 
 React.render(&lt;Calendar
-    onSelect={onSelect}
-    prevMonthElement={prev}
-    nextMonthElement={next}
     month={new Date(746641200000)}
     /&gt;, el);</pre>
         </div>
@@ -96,16 +88,8 @@ React.render(&lt;Calendar
         <div class="demo" id="min-max-calendar"></div>
         <div class="code">
             <pre class="language-jsx">const el = document.getElementById('basic-calendar');
-const prev = &lt;i className="fa fa-arrow-left"&gt;&lt;/i&gt;;
-const next = &lt;i className="fa fa-arrow-right"&gt;&lt;/i&gt;;
-const onSelect = date =&gt; {
-    console.log(date);
-};
 
 React.render(&lt;Calendar
-    onSelect={onSelect}
-    prevMonthElement={prev}
-    nextMonthElement={next}
     min={new Date()} /* Now (Today) */
     max={new Date(Date.now() + 85600000 * 10)} /* 10 Days later */
     /&gt;, el);</pre>
