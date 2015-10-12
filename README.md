@@ -22,9 +22,9 @@ import { Calendar } from 'react-persian-datepicker';
 
 You can create a persian date picker by using the `Calendar` component. The `props` are as following:
 
-* onSelect (*required*): Invoked when a date is selected and the `moment` object will be passed.
-* prevMonth (*required*): The element for navigating to the previous month button.
-* nextMonth (*required*): The element for navigating to the next month button.
+* onSelect: Invoked when a date is selected and the `moment` object will be passed.
+* prevMonth: The element for navigating to the previous month button.
+* nextMonth: The element for navigating to the next month button.
 * month: The default shown month on the date picker.
 * min: The minimum selectable date. It can be a `Date` or `moment` object.
 * max: The maximum selectable date. It can be a `Date` or `moment` object.
