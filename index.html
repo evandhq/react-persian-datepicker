@@ -54,28 +54,47 @@ React.render(&lt;Calendar
     /&gt;, el);</pre>
         </div>
     </div>
+
     <p class="result">You selected: <span id="basic-calendar-result">nothing yet</span></p>
+
+    <h2>Date Picker Input</h2>
+
+    <p>You can create a persian date picker by using the <code>DatePicker</code> component. Actually, it creates two
+        inputs, properties of which can be customized through <code>resultInput</code> and <code>formatterInput</code>.
+        <code>resultInput</code> is created in order to store the selected output in proper format. (This makes it easy
+        to integrate with <code>redux-form</code>). <code>formatterInput</code> is the input that you see below. Either
+        typing and selecting date on calendar can change it and the <code>resultInput</code> will be updated.
+        <strong>Use your browser's element inspector to see the hidden input beside the formatter input.</strong>
+        The DatePicker's <code>props</code> are as following:</p>
+    <ol>
+        <li><strong>inputFormat</strong> <em>(default: 'jYYYY/jMM/jDD')</em>: A moment-jalaali string format. It should have to be a user-friendly format. (Jalali Recommended)</li>
+        <li><strong>outputFormat</strong> <em>(default: 'YYYY-MM-DD')</em>: A moment-jalaali string format. It should have to be a server-friendly format. (Gregorian Recommended)</li>
+        <li><strong>resultInput</strong>: The props of the result input</li>
+        <li><strong>formatterInput</strong>: The props of formatter input</li>
+    </ol>
+    <div class="example example-4">
+        <div class="demo" id="datepicker"></div>
+        <div class="code">
+            <pre class="language-jsx">
+const el = document.getElementById('datepicker');
+
+ReactDOM.render(&lt;DatePicker
+    resultInput={{ type: 'hidden' }} /&gt;, el);</pre>
+        </div>
+    </div>
 
     <h2>Default Month</h2>
 
-    <p>You can set the default shown month on the date picker by setting a <code>Date</code> or <code>moment</code>
-        object to <strong><code>month</code></strong> prop:</p>
+    <p>You can set the default shown month on the date picker by setting a <code>moment</code> object to <strong><code>month</code></strong>
+        prop:</p>
 
     <div class="example example-2">
         <div class="demo" id="default-month-calendar"></div>
         <div class="code">
             <pre class="language-jsx">const el = document.getElementById('default-month-calendar');
-const prev = &lt;i className="fa fa-arrow-left"&gt;&lt;/i&gt;;
-const next = &lt;i className="fa fa-arrow-right"&gt;&lt;/i&gt;;
-const onSelect = date =&gt; {
-    console.log(date);
-};
 
 React.render(&lt;Calendar
-    onSelect={onSelect}
-    prevMonthElement={prev}
-    nextMonthElement={next}
-    month={new Date(746641200000)}
+    month={moment('1372/06', 'jYYYY/jMM')}
     /&gt;, el);</pre>
         </div>
     </div>
@@ -84,30 +103,18 @@ React.render(&lt;Calendar
 
     <p>You can restrict selectable dates by using following <code>props</code>:</p>
     <ol>
-        <li><strong>min</strong>: The minimum selectable date. It can be a <code>Date</code> or <code>moment</code>
-            object.
-        </li>
-        <li><strong>max</strong>: The maximum selectable date. It can be a <code>Date</code> or <code>moment</code>
-            object.
-        </li>
+        <li><strong>min</strong>: The minimum selectable date. It should be a <code>moment</code>object.</li>
+        <li><strong>max</strong>: The maximum selectable date. It should be a <code>moment</code> object.</li>
     </ol>
 
     <div class="example example-3">
         <div class="demo" id="min-max-calendar"></div>
         <div class="code">
             <pre class="language-jsx">const el = document.getElementById('basic-calendar');
-const prev = &lt;i className="fa fa-arrow-left"&gt;&lt;/i&gt;;
-const next = &lt;i className="fa fa-arrow-right"&gt;&lt;/i&gt;;
-const onSelect = date =&gt; {
-    console.log(date);
-};
 
 React.render(&lt;Calendar
-    onSelect={onSelect}
-    prevMonthElement={prev}
-    nextMonthElement={next}
-    min={new Date()} /* Now (Today) */
-    max={new Date(Date.now() + 85600000 * 10)} /* 10 Days later */
+    min={moment()} /* Now (Today) */
+    max={moment().add(10, 'days')} /* 10 Days later */
     /&gt;, el);</pre>
         </div>
     </div>
@@ -122,6 +129,7 @@ React.render(&lt;Calendar
     Prism.highlightElement(document.querySelector('.example-1 .code pre'), true);
     Prism.highlightElement(document.querySelector('.example-2 .code pre'), true);
     Prism.highlightElement(document.querySelector('.example-3 .code pre'), true);
+    Prism.highlightElement(document.querySelector('.example-4 .code pre'), true);
 </script>
 </body>
 </html>
