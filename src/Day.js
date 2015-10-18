@@ -29,7 +29,7 @@ export default class Day extends React.Component {
     classes = classes.join(' ');
 
     return (<div className="day-wrapper">
-      <button disabled={isDisabled} className={classes} onClick={handleClick}>
+      <button type="button" disabled={isDisabled} className={classes} onClick={handleClick}>
         <PersianNumber>{day.format('jD')}</PersianNumber>
       </button>
     </div>);
