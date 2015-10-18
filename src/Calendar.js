@@ -31,7 +31,9 @@ export default class Calendar extends React.Component {
       PropTypes.string
     ]),
     prevMonthElement: PropTypes.element,
-    nextMonthElement: PropTypes.element
+    nextMonthElement: PropTypes.element,
+    selectedDay: PropTypes.object,
+    className: PropTypes.string
   };
 
   static defaultProps = {
@@ -40,19 +42,37 @@ export default class Calendar extends React.Component {
   };
 
   componentWillMount() {
+    const state = {};
+    const props = this.props;
+
     let month;
-    if (this.props.month) {
-      month = moment(this.props.month);
+
+    if (props.selectedDay) {
+      state.selectedDay = props.selectedDay;
+      month = state.selectedDay.clone();
     } else {
-      month = moment();
+      if (props.month) {
+        month = props.month;
+      } else {
+        month = moment();
+      }
+
+      month.locale('fa');
     }
 
-    month.locale('fa');
+    state.month = month;
 
-    this.state = {
-      month,
-      selectedDay: false
-    };
+    this.state = state;
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    if (nextProps.selectedDay !== this.props.selectedDay) {
+      nextState.selectedDay = nextProps.selectedDay;
+    }
+
+    if (this.state.selectedDay !== nextState.selectedDay) {
+      nextState.month = nextState.selectedDay.clone();
+    }
   }
 
   nextMonth() {
@@ -71,10 +91,6 @@ export default class Calendar extends React.Component {
     const state = this.state;
     const { onSelect } = this.props;
 
-    if (day.format('jMM') !== state.month.format('jMM')) {
-      state.month = day.clone();
-    }
-
     this.setState({
       ...state,
       selectedDay: day
@@ -87,7 +103,7 @@ export default class Calendar extends React.Component {
 
   render() {
     const { month, selectedDay } = this.state;
-    const { prevMonthElement, nextMonthElement, min, max } = this.props;
+    const { prevMonthElement, nextMonthElement, min, max, className, ...rest } = this.props;
     const days = [];
 
     const current = month.clone().startOf('jMonth');
@@ -104,7 +120,7 @@ export default class Calendar extends React.Component {
       current.add(1, 'days');
     }
 
-    return (<div className="calendar">
+    return (<div className={(className ? className : '') + ' calendar'} {...rest}>
       <Heading month={month}
                onPrev={this.prevMonth.bind(this)}
                onNext={this.nextMonth.bind(this)}
@@ -124,7 +140,7 @@ export default class Calendar extends React.Component {
 
             return (<Day
               key={key}
-              selected={day.isSame(selectedDay, 'day')}
+              selected={selectedDay ? selectedDay.isSame(day, 'day') : false}
               handleClick={this.handleClick.bind(this, day)}
               day={day}
               isDisabled={isDisabled}

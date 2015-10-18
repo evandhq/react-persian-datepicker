@@ -64,3 +64,13 @@ footer {
     background-color: #fff;
     box-shadow: 0 2px 3px #dbdbdb;
 }
+
+input {
+    display: block;
+    width: 200px;
+    max-width: 80%;
+    border-radius: 3px;
+    line-height: 35px;
+    border: 1px solid #DCDCDC;
+    padding: 0 10px;
+}
