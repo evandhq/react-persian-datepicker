@@ -23613,10 +23613,27 @@ var Calendar = (function (_React$Component) {
       if (nextProps.selectedDay !== this.props.selectedDay) {
         nextState.selectedDay = nextProps.selectedDay;
       }
+    }
+  }, {
+    key: 'shouldComponentUpdate',
+    value: function shouldComponentUpdate(nextProps, nextState) {
+      var currentYearMonth = this.state.month.format('jYYYY-jMM');
 
-      if (this.state.selectedDay !== nextState.selectedDay) {
+      if (nextProps.selectedDay && currentYearMonth !== nextProps.selectedDay.format('jYYYY-jMM')) {
+        nextState.month = nextProps.selectedDay.clone();
+      } else if (currentYearMonth !== nextState.selectedDay.format('jYYYY-jMM')) {
         nextState.month = nextState.selectedDay.clone();
       }
+
+      if (nextProps.selectedDay !== this.state.selectedDay || nextProps.min !== this.props.min || nextProps.max !== this.props.max) {
+        return true;
+      }
+
+      if (nextState.selectedDay !== this.state.selectedDay || nextState.month !== this.state.month) {
+        return true;
+      }
+
+      return false;
     }
   }, {
     key: 'nextMonth',
@@ -23708,7 +23725,7 @@ var Calendar = (function (_React$Component) {
             var isDisabled = (min ? day.isBefore(min) : false) || (max ? day.isAfter(max) : false);
 
             return _react2['default'].createElement(_DayJs2['default'], {
-              key: key,
+              key: day.format('MM-DD'),
               selected: selectedDay ? selectedDay.isSame(day, 'day') : false,
               handleClick: _this.handleClick.bind(_this, day),
               day: day,
@@ -23747,7 +23764,7 @@ var Calendar = (function (_React$Component) {
 exports['default'] = Calendar;
 module.exports = exports['default'];
 
-},{"./Day.js":166,"./Heading.js":167,"moment-jalaali":3,"react":163}],165:[function(require,module,exports){
+},{"./Day.js":166,"./Heading.js":168,"moment-jalaali":3,"react":163}],165:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -23798,7 +23815,6 @@ var styles = {
     position: 'absolute',
     top: '100%',
     left: 0,
-    marginTop: '5px',
     transition: 'all .3s ease'
   }
 };
@@ -23855,15 +23871,8 @@ var DatePicker = (function (_React$Component) {
     key: 'componentWillMount',
     value: function componentWillMount() {
       this.selected = false;
-      var _props = this.props;
-      var resultInput = _props.resultInput;
-      var outputFormat = _props.outputFormat;
 
       document.addEventListener('click', this.blur);
-
-      if (resultInput.value) {
-        this.state.selected = (0, _momentJalaali2['default'])(resultInput.value, outputFormat);
-      }
     }
   }, {
     key: 'componentDidUpdate',
@@ -23876,15 +23885,33 @@ var DatePicker = (function (_React$Component) {
       document.removeEventListener('click', this.blur);
     }
   }, {
+    key: 'shouldComponentUpdate',
+    value: function shouldComponentUpdate(nextProps, nextState) {
+      if (nextProps.inputFormat !== this.props.inputFormat) {
+        return true;
+      }
+
+      if (nextState.selected !== this.state.selected || nextState.visible !== this.state.visible) {
+        return true;
+      }
+
+      return false;
+    }
+  }, {
     key: 'onFormat',
     value: function onFormat(event) {
-      var _props2 = this.props;
-      var inputFormat = _props2.inputFormat;
-      var formatterInput = _props2.formatterInput;
+      var _props = this.props;
+      var inputFormat = _props.inputFormat;
+      var formatterInput = _props.formatterInput;
 
       formatterInput.value = event.target.value;
       var date = (0, _momentJalaali2['default'])(formatterInput.value, inputFormat);
-      this.select(date, false);
+
+      if (date.isValid()) {
+        this.select(date, false);
+      } else {
+        this.forceUpdate();
+      }
     }
   }, {
     key: 'select',
@@ -23913,14 +23940,12 @@ var DatePicker = (function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      var _props3 = this.props;
-      var formatterInput = _props3.formatterInput;
-      var resultInput = _props3.resultInput;
-      var inputFormat = _props3.inputFormat;
-      var outputFormat = _props3.outputFormat;
-      var children = _props3.children;
+      var _props2 = this.props;
+      var formatterInput = _props2.formatterInput;
+      var inputFormat = _props2.inputFormat;
+      var children = _props2.children;
 
-      var rest = _objectWithoutProperties(_props3, ['formatterInput', 'resultInput', 'inputFormat', 'outputFormat', 'children']);
+      var rest = _objectWithoutProperties(_props2, ['formatterInput', 'inputFormat', 'children']);
 
       var _state = this.state;
       var visible = _state.visible;
@@ -23929,32 +23954,28 @@ var DatePicker = (function (_React$Component) {
       var currentCalendarStyle = visible ? styles.calendarVisible : styles.calendarHidden;
       var calendarStyle = styles.calendar;
 
-      if (selected) {
-        if (this.selected) {
-          formatterInput.value = selected.format(inputFormat);
-        }
-
-        resultInput.value = selected.format(outputFormat);
+      if (selected && this.selected) {
+        formatterInput.value = selected.format(inputFormat);
       }
 
       return _react2['default'].createElement(
         'div',
         { style: styles.wrapper },
-        _react2['default'].createElement('input', resultInput),
         _react2['default'].createElement('input', _extends({}, formatterInput, { onClick: stopPropagation, onChange: this.onFormat.bind(this), onFocus: this.focus,
-          onKeyUp: this.keyUp })),
+          onKeyUp: this.keyUp, ref: 'formatter' })),
         children,
-        _react2['default'].createElement(_CalendarJs2['default'], _extends({}, rest, { onClick: stopPropagation, selectedDay: selected,
-          style: _extends({}, currentCalendarStyle, calendarStyle), onSelect: this.select.bind(this) }))
+        _react2['default'].createElement(
+          'div',
+          { style: _extends({}, currentCalendarStyle, calendarStyle), onClick: stopPropagation },
+          _react2['default'].createElement(_CalendarJs2['default'], _extends({}, rest, { selectedDay: selected, onSelect: this.select.bind(this) }))
+        )
       );
     }
   }], [{
     key: 'propTypes',
     value: {
       formatterInput: _react.PropTypes.object,
-      resultInput: _react.PropTypes.object,
       inputFormat: _react.PropTypes.string,
-      outputFormat: _react.PropTypes.string,
       onSelect: _react.PropTypes.func,
       children: _react.PropTypes.node
     },
@@ -23963,8 +23984,6 @@ var DatePicker = (function (_React$Component) {
     key: 'defaultProps',
     value: {
       inputFormat: 'jYYYY/jMM/jDD',
-      outputFormat: 'YYYY-MM-DD',
-      resultInput: {},
       formatterInput: {}
     },
     enumerable: true
@@ -24009,6 +24028,15 @@ var Day = (function (_React$Component) {
   }
 
   _createClass(Day, [{
+    key: 'shouldComponentUpdate',
+    value: function shouldComponentUpdate(nextProps) {
+      if (nextProps.selected !== this.props.selected || nextProps.isDisabled !== this.props.isDisabled || nextProps.isCurrentMonth !== this.props.isCurrentMonth) {
+        return true;
+      }
+
+      return false;
+    }
+  }, {
     key: 'render',
     value: function render() {
       var _props = this.props;
@@ -24033,7 +24061,7 @@ var Day = (function (_React$Component) {
         { className: 'day-wrapper' },
         _react2['default'].createElement(
           'button',
-          { disabled: isDisabled, className: classes, onClick: handleClick },
+          { type: 'button', disabled: isDisabled, className: classes, onClick: handleClick },
           _react2['default'].createElement(
             _reactPersian.PersianNumber,
             null,
@@ -24067,6 +24095,209 @@ exports['default'] = Day;
 module.exports = exports['default'];
 
 },{"react":163,"react-persian":8}],167:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _HeadingJs = require('./Heading.js');
+
+var _HeadingJs2 = _interopRequireDefault(_HeadingJs);
+
+var _momentJalaali = require('moment-jalaali');
+
+var _momentJalaali2 = _interopRequireDefault(_momentJalaali);
+
+var _DayJs = require('./Day.js');
+
+var _DayJs2 = _interopRequireDefault(_DayJs);
+
+// Load Persian localisation
+_momentJalaali2['default'].loadPersian();
+
+// Day of week names for use in date-picker heading
+var dayOfWeekNames = ['ش', 'ی', 'د', 'س', 'چ', 'پ', 'ج'];
+
+var DaysContainer = (function (_React$Component) {
+  _inherits(DaysContainer, _React$Component);
+
+  function DaysContainer() {
+    _classCallCheck(this, DaysContainer);
+
+    _get(Object.getPrototypeOf(DaysContainer.prototype), 'constructor', this).apply(this, arguments);
+  }
+
+  _createClass(DaysContainer, [{
+    key: 'componentWillMount',
+    value: function componentWillMount() {
+      var state = {};
+      var props = this.props;
+
+      var month = undefined;
+
+      if (props.selectedDay) {
+        state.selectedDay = props.selectedDay;
+        month = state.selectedDay.clone();
+      } else {
+        if (props.month) {
+          month = props.month;
+        } else {
+          month = (0, _momentJalaali2['default'])();
+        }
+
+        month.locale('fa');
+      }
+
+      state.month = month;
+
+      this.state = state;
+    }
+  }, {
+    key: 'componentWillUpdate',
+    value: function componentWillUpdate(nextProps, nextState) {
+      if (nextProps.selectedDay !== this.props.selectedDay) {
+        nextState.selectedDay = nextProps.selectedDay;
+      }
+
+      if (this.state.selectedDay !== nextState.selectedDay) {
+        nextState.month = nextState.selectedDay.clone();
+      }
+    }
+  }, {
+    key: 'shouldComponentUpdate',
+    value: function shouldComponentUpdate(nextProps, nextState) {
+      if (nextProps.selectedDay !== this.state.selectedDay || nextProps.min !== this.props.min || nextProps.max !== this.props.max) {
+        return true;
+      }
+
+      if (nextState.selectedDay !== this.state.selectedDay || nextState.month !== this.state.month) {
+        return true;
+      }
+
+      return false;
+    }
+  }, {
+    key: 'nextMonth',
+    value: function nextMonth() {
+      var month = this.state.month;
+
+      month.add(1, 'months');
+      this.forceUpdate();
+    }
+  }, {
+    key: 'prevMonth',
+    value: function prevMonth() {
+      var month = this.state.month;
+
+      month.subtract(1, 'months');
+      this.forceUpdate();
+    }
+  }, {
+    key: 'handleClick',
+    value: function handleClick(day) {
+      var state = this.state;
+      var onSelect = this.props.onSelect;
+
+      this.setState(_extends({}, state, {
+        selectedDay: day
+      }));
+
+      if (onSelect) {
+        onSelect(day);
+      }
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _this = this;
+
+      var _state = this.state;
+      var month = _state.month;
+      var selectedDay = _state.selectedDay;
+      var _props = this.props;
+      var prevMonthElement = _props.prevMonthElement;
+      var nextMonthElement = _props.nextMonthElement;
+      var min = _props.min;
+      var max = _props.max;
+      var className = _props.className;
+
+      var rest = _objectWithoutProperties(_props, ['prevMonthElement', 'nextMonthElement', 'min', 'max', 'className']);
+
+      var days = [];
+
+      var current = month.clone().startOf('jMonth');
+      var end = month.clone().endOf('jMonth');
+
+      // Set start to the first day of week in the last month
+      current.subtract((current.day() + 1) % 7, 'days');
+
+      // Set end to the last day of week in the next month
+      end.add(6 - (end.day() + 1) % 7, 'days');
+
+      while (current.isBefore(end)) {
+        days.push(current.clone());
+        current.add(1, 'days');
+      }
+
+      return _react2['default'].createElement(
+        'div',
+        { className: 'calendar-container' },
+        days.map(function (day, key) {
+          var isCurrentMonth = day.format('jMM') === month.format('jMM');
+          var isDisabled = (min ? day.isBefore(min) : false) || (max ? day.isAfter(max) : false);
+
+          return _react2['default'].createElement(_DayJs2['default'], {
+            key: key,
+            selected: selectedDay ? selectedDay.isSame(day, 'day') : false,
+            handleClick: _this.handleClick.bind(_this, day),
+            day: day,
+            isDisabled: isDisabled,
+            isCurrentMonth: isCurrentMonth });
+        })
+      );
+    }
+  }], [{
+    key: 'propTypes',
+    value: {
+      month: _react.PropTypes.object,
+      selectedDay: _react.PropTypes.object
+    },
+    enumerable: true
+  }, {
+    key: 'defaultProps',
+    value: {
+      prevMonthElement: _react2['default'].createElement('i', { className: 'fa fa-arrow-left' }),
+      nextMonthElement: _react2['default'].createElement('i', { className: 'fa fa-arrow-right' })
+    },
+    enumerable: true
+  }]);
+
+  return DaysContainer;
+})(_react2['default'].Component);
+
+exports['default'] = DaysContainer;
+module.exports = exports['default'];
+
+},{"./Day.js":166,"./Heading.js":168,"moment-jalaali":3,"react":163}],168:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -24146,7 +24377,7 @@ var Heading = (function (_React$Component) {
 exports['default'] = Heading;
 module.exports = exports['default'];
 
-},{"react":163,"react-persian":8}],168:[function(require,module,exports){
+},{"react":163,"react-persian":8}],169:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -24169,4 +24400,4 @@ exports['default'] = {
 };
 module.exports = exports['default'];
 
-},{"./Calendar.js":164,"./DatePicker.js":165}]},{},[164,165,166,167,168,1]);
+},{"./Calendar.js":164,"./DatePicker.js":165}]},{},[164,165,166,167,168,169,1]);

@@ -20,7 +20,6 @@ const styles = {
     position: 'absolute',
     top: '100%',
     left: 0,
-    marginTop: '5px',
     transition: 'all .3s ease'
   }
 };
@@ -33,17 +32,13 @@ function stopPropagation(event) {
 export default class DatePicker extends React.Component {
   static propTypes = {
     formatterInput: PropTypes.object,
-    resultInput: PropTypes.object,
     inputFormat: PropTypes.string,
-    outputFormat: PropTypes.string,
     onSelect: PropTypes.func,
     children: PropTypes.node
   };
 
   static defaultProps = {
     inputFormat: 'jYYYY/jMM/jDD',
-    outputFormat: 'YYYY-MM-DD',
-    resultInput: {},
     formatterInput: {}
   };
 
@@ -53,13 +48,20 @@ export default class DatePicker extends React.Component {
 
   componentWillMount() {
     this.selected = false;
-    const { resultInput, outputFormat } = this.props;
 
     document.addEventListener('click', this.blur);
+  }
 
-    if (resultInput.value) {
-      this.state.selected = moment(resultInput.value, outputFormat);
+  shouldComponentUpdate(nextProps, nextState) {
+    if (nextProps.inputFormat !== this.props.inputFormat) {
+      return true;
     }
+
+    if (nextState.selected !== this.state.selected || nextState.visible !== this.state.visible) {
+      return true;
+    }
+
+    return false;
   }
 
   componentDidUpdate() {
@@ -74,7 +76,12 @@ export default class DatePicker extends React.Component {
     const { inputFormat, formatterInput } = this.props;
     formatterInput.value = event.target.value;
     const date = moment(formatterInput.value, inputFormat);
-    this.select(date, false);
+
+    if (date.isValid()) {
+      this.select(date, false);
+    } else {
+      this.forceUpdate();
+    }
   }
 
   selected = true;
@@ -130,26 +137,22 @@ export default class DatePicker extends React.Component {
   }
 
   render() {
-    const { formatterInput, resultInput, inputFormat, outputFormat, children, ...rest } = this.props;
+    const { formatterInput, inputFormat, children, ...rest } = this.props;
     const { visible, selected } = this.state;
     const currentCalendarStyle = visible ? styles.calendarVisible : styles.calendarHidden;
     const calendarStyle = styles.calendar;
 
-    if (selected) {
-      if (this.selected) {
-        formatterInput.value = selected.format(inputFormat);
-      }
-
-      resultInput.value = selected.format(outputFormat);
+    if (selected && this.selected) {
+      formatterInput.value = selected.format(inputFormat);
     }
 
     return (<div style={styles.wrapper}>
-      <input {...resultInput} />
       <input {...formatterInput} onClick={stopPropagation} onChange={::this.onFormat} onFocus={this.focus}
-                                 onKeyUp={this.keyUp}/>
+                                 onKeyUp={this.keyUp} ref="formatter"/>
       {children}
-      <Calendar {...rest} onClick={stopPropagation} selectedDay={selected}
-                          style={{...currentCalendarStyle, ...calendarStyle}} onSelect={::this.select}/>
+      <div style={{...currentCalendarStyle, ...calendarStyle}} onClick={stopPropagation}>
+        <Calendar {...rest} selectedDay={selected} onSelect={::this.select}/>
+      </div>
     </div>);
   }
 }

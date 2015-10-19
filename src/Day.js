@@ -14,6 +14,14 @@ export default class Day extends React.Component {
     isCurrentMonth: false
   };
 
+  shouldComponentUpdate(nextProps) {
+    if (nextProps.selected !== this.props.selected || nextProps.isDisabled !== this.props.isDisabled || nextProps.isCurrentMonth !== this.props.isCurrentMonth) {
+      return true;
+    }
+
+    return false;
+  }
+
   render() {
     const { isDisabled, day, handleClick } = this.props;
     let classes = ['day'];

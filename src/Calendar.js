@@ -65,13 +65,29 @@ export default class Calendar extends React.Component {
     this.state = state;
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    const currentYearMonth = this.state.month.format('jYYYY-jMM');
+
+    if (nextProps.selectedDay && currentYearMonth !== nextProps.selectedDay.format('jYYYY-jMM')) {
+      nextState.month = nextProps.selectedDay.clone();
+    } else if (currentYearMonth !== nextState.selectedDay.format('jYYYY-jMM')) {
+      nextState.month = nextState.selectedDay.clone();
+    }
+
+    if (nextProps.selectedDay !== this.state.selectedDay || nextProps.min !== this.props.min || nextProps.max !== this.props.max) {
+      return true;
+    }
+
+    if (nextState.selectedDay !== this.state.selectedDay || nextState.month !== this.state.month) {
+      return true;
+    }
+
+    return false;
+  }
+
   componentWillUpdate(nextProps, nextState) {
     if (nextProps.selectedDay !== this.props.selectedDay) {
       nextState.selectedDay = nextProps.selectedDay;
-    }
-
-    if (this.state.selectedDay !== nextState.selectedDay) {
-      nextState.month = nextState.selectedDay.clone();
     }
   }
 
@@ -134,12 +150,12 @@ export default class Calendar extends React.Component {
       </div>
       <div className="calendar-container">
         {
-          days.map((day, key) => {
+          days.map(day => {
             const isCurrentMonth = day.format('jMM') === month.format('jMM');
             const isDisabled = (min ? day.isBefore(min) : false) || (max ? day.isAfter(max) : false);
 
             return (<Day
-              key={key}
+              key={day.format('MM-DD')}
               selected={selectedDay ? selectedDay.isSame(day, 'day') : false}
               handleClick={this.handleClick.bind(this, day)}
               day={day}
