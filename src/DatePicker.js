@@ -20,7 +20,8 @@ const styles = {
     position: 'absolute',
     top: '100%',
     left: 0,
-    transition: 'all .3s ease'
+    transition: 'all .3s ease',
+    zIndex: '9999'
   }
 };
 
@@ -146,7 +147,7 @@ export default class DatePicker extends React.Component {
       formatterInput.value = selected.format(inputFormat);
     }
 
-    return (<div style={styles.wrapper}>
+    return (<div style={styles.wrapper} className="calendar-datepicker">
       <input {...formatterInput} onClick={stopPropagation} onChange={::this.onFormat} onFocus={this.focus}
                                  onKeyUp={this.keyUp} ref="formatter"/>
       {children}
