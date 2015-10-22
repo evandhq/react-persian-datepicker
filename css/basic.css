@@ -67,6 +67,7 @@
     outline: none;
     height: 32px;
     border-radius: 3px;
+    cursor: pointer;
 }
 
 .calendar .calendar-container button:hover {
