@@ -59,18 +59,14 @@ React.render(&lt;Calendar
 
     <h2>Date Picker Input</h2>
 
-    <p>You can create a persian date picker by using the <code>DatePicker</code> component. Actually, it creates two
-        inputs, properties of which can be customized through <code>resultInput</code> and <code>formatterInput</code>.
-        <code>resultInput</code> is created in order to store the selected output in proper format. (This makes it easy
-        to integrate with <code>redux-form</code>). <code>formatterInput</code> is the input that you see below. Either
-        typing and selecting date on calendar can change it and the <code>resultInput</code> will be updated.
-        <strong>Use your browser's element inspector to see the hidden input beside the formatter input.</strong>
+    <p>You can create a persian date picker by using the <code>DatePicker</code> component.
         The DatePicker's <code>props</code> are as following:</p>
     <ol>
-        <li><strong>inputFormat</strong> <em>(default: 'jYYYY/jMM/jDD')</em>: A moment-jalaali string format. It should have to be a user-friendly format. (Jalali Recommended)</li>
-        <li><strong>outputFormat</strong> <em>(default: 'YYYY-MM-DD')</em>: A moment-jalaali string format. It should have to be a server-friendly format. (Gregorian Recommended)</li>
-        <li><strong>resultInput</strong>: The props of the result input</li>
+        <li><strong>inputFormat</strong> <em>(default: 'jYYYY/jMM/jDD')</em>: A moment-jalaali string format. It should
+            have to be a user-friendly format. (Jalali Recommended)
+        </li>
         <li><strong>formatterInput</strong>: The props of formatter input</li>
+        <li>All <code>Calendar</code> props are acceptable.</li>
     </ol>
     <div class="example example-4">
         <div class="demo" id="datepicker"></div>
@@ -78,8 +74,7 @@ React.render(&lt;Calendar
             <pre class="language-jsx">
 const el = document.getElementById('datepicker');
 
-ReactDOM.render(&lt;DatePicker
-    resultInput={{ type: 'hidden' }} /&gt;, el);</pre>
+ReactDOM.render(&lt;DatePicker /&gt;, el);</pre>
         </div>
     </div>
 
