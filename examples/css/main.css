@@ -1,15 +1,15 @@
 @font-face {
-    font-family: Iranian;
+    font-family: Vazir;
     font-size: 16px;
     font-weight: normal;
-    src: url('//raw.githubusercontent.com/font-store/font-Iranian/master/Web-fonts/IranianSans/IranianSansWeb-Regular.woff')
+    src: url('//raw.githubusercontent.com/rastikerdar/vazir-font/master/Vazir.woff')
 }
 
 @font-face {
-    font-family: Iranian;
+    font-family: Vazir;
     font-size: 16px;
     font-weight: bold;
-    src: url('//raw.githubusercontent.com/font-store/font-Iranian/master/Web-fonts/IranianSans/IranianSansWeb-Bold.woff')
+    src: url('//raw.githubusercontent.com/rastikerdar/vazir-font/master/Vazir-Bold.ttf')
 }
 
 body {
@@ -19,7 +19,7 @@ body {
 }
 
 .calendar, .calendar button {
-    font-family: Iranian;
+    font-family: Vazir;
 }
 
 .container {
