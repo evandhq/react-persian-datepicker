@@ -49,7 +49,9 @@ export default class DatePicker extends React.Component {
 
   componentWillMount() {
     this.selected = false;
+  }
 
+  componentDidMount() {
     document.addEventListener('click', this.blur);
   }
 
