@@ -15,8 +15,8 @@ export default class Heading extends React.Component {
 
     return (<div className="heading">
       <PersianNumber>{month.format('jMMMM jYYYY')}</PersianNumber>
-      <button className="prev-month" onClick={onPrev}>{prevMonthElement}</button>
-      <button className="next-month" onClick={onNext}>{nextMonthElement}</button>
+      <button type="button" className="prev-month" onClick={onPrev}>{prevMonthElement}</button>
+      <button type="button" className="next-month" onClick={onNext}>{nextMonthElement}</button>
     </div>);
   }
 }
