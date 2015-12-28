@@ -23,9 +23,13 @@ module.exports = function (grunt) {
         }],
         options: {
           transform: [
-            ['babelify', {
-              stage: 0
-            }]
+            [
+              'babelify',
+              {
+                stage: 0,
+                only: /src|examples/
+              }
+            ]
           ]
         }
       }
@@ -38,6 +42,12 @@ module.exports = function (grunt) {
         files: {
           'examples/js/build.min.js': ['examples/js/build.js']
         }
+      }
+    },
+    watch: {
+      example: {
+        files: ['src/**/*.js'],
+        tasks: ['browserify:examples']
       }
     }
   });
