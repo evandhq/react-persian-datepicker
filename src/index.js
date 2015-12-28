@@ -1,7 +1,2 @@
-import Calendar from './Calendar.js';
-import DatePicker from './DatePicker.js';
-
-export default {
-  Calendar,
-  DatePicker
-};
+export Calendar from './components/Calendar';
+export DatePicker from './components/DatePicker';
