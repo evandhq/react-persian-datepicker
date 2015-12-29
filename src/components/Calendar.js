@@ -1,8 +1,9 @@
 import React, { Component, PropTypes } from 'react';
 import Heading from './Heading';
 import DaysOfWeek from './DaysOfWeek';
+import MonthSelector from './MonthSelector';
 import Day from './Day';
-import { getDaysOfMonth } from './../helpers/utils';
+import { getDaysOfMonth } from '../utils/moment-helper';
 import moment from 'moment-jalali';
 
 // Load Persian localisation
@@ -17,7 +18,9 @@ export default class Calendar extends Component {
 
   static childContextTypes = {
     nextMonth: PropTypes.func.isRequired,
-    prevMonth: PropTypes.func.isRequired
+    prevMonth: PropTypes.func.isRequired,
+    setCalendarMode: PropTypes.func.isRequired,
+    setMonth: PropTypes.func.isRequired
   };
 
   componentWillReceiveProps(nextProps) {
@@ -28,7 +31,8 @@ export default class Calendar extends Component {
 
   state = {
     month: this.props.defaultMonth || this.props.selectedDay || moment(),
-    selectedDay: this.props.selectedDay || null
+    selectedDay: this.props.selectedDay || null,
+    mode: 'days'
   };
 
   days = null;
@@ -37,8 +41,18 @@ export default class Calendar extends Component {
   getChildContext() {
     return {
       nextMonth: this.nextMonth.bind(this),
-      prevMonth: this.prevMonth.bind(this)
+      prevMonth: this.prevMonth.bind(this),
+      setCalendarMode: this.setMode.bind(this),
+      setMonth: this.setMonth.bind(this)
     };
+  }
+
+  setMode(mode) {
+    this.setState({mode});
+  }
+
+  setMonth(month) {
+    this.setState({month});
   }
 
   nextMonth() {
@@ -70,6 +84,11 @@ export default class Calendar extends Component {
     }
   };
 
+  renderMonthSelector() {
+    const { month } = this.state;
+    return (<MonthSelector selectedMonth={month}/>);
+  }
+
   renderDays() {
     const { month, selectedDay } = this.state;
     const { min, max } = this.props;
@@ -83,32 +102,35 @@ export default class Calendar extends Component {
       this.lastRenderedMonth = month;
     }
 
-    return (<div className="calendar-container">
-      {
-        days.map(day => {
-          const isCurrentMonth = day.format('jMM') === month.format('jMM');
-          const disabled = (min ? day.isBefore(min) : false) || (max ? day.isAfter(max) : false);
-          const selected = selectedDay ? selectedDay.isSame(day, 'day') : false;
+    return (<div>
+      <Heading month={month}/>
+      <DaysOfWeek/>
+      <div className="calendar-container">
+        {
+          days.map(day => {
+            const isCurrentMonth = day.format('jMM') === month.format('jMM');
+            const disabled = (min ? day.isBefore(min) : false) || (max ? day.isAfter(max) : false);
+            const selected = selectedDay ? selectedDay.isSame(day, 'day') : false;
 
-          return (<Day
-            key={day.format('YYYYMMDD')}
-            onClick={this.handleClickOnDay}
-            day={day}
-            disabled={disabled}
-            selected={selected}
-            isCurrentMonth={isCurrentMonth}/>);
-        })
-      }
+            return (<Day
+              key={day.format('YYYYMMDD')}
+              onClick={this.handleClickOnDay}
+              day={day}
+              disabled={disabled}
+              selected={selected}
+              isCurrentMonth={isCurrentMonth}/>);
+          })
+        }
+      </div>
     </div>);
   }
 
   render() {
     const { ...rest } = this.props;
-    const { month } = this.state;
+    const { month, mode } = this.state;
+
     return (<div className={'calendar'} {...rest}>
-      <Heading month={month}/>
-      <DaysOfWeek/>
-      { this.renderDays() }
+      { mode === 'monthSelector' ? this.renderMonthSelector() : this.renderDays() }
     </div>);
   }
 }
