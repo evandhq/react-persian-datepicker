@@ -31,7 +31,8 @@ export default class DatePicker extends Component {
     onChange: PropTypes.func,
     children: PropTypes.node,
     min: PropTypes.object,
-    max: PropTypes.object
+    max: PropTypes.object,
+    displayFormat: PropTypes.string
   };
 
   static defaultProps = {
@@ -45,6 +46,14 @@ export default class DatePicker extends Component {
       ? this.props.value.format(this.props.displayFormat)
       : ''
   };
+
+  setVisibility(visible) {
+    if (visible) {
+      this.closing = true;
+    }
+
+    this.setState({visible});
+  }
 
   handleInputChange(event) {
     const { displayFormat } = this.props;
@@ -77,14 +86,6 @@ export default class DatePicker extends Component {
   handleSelect(date) {
     this.setVisibility(false);
     this.handleChange(date);
-  }
-
-  setVisibility(visible) {
-    if (visible) {
-      this.closing = true;
-    }
-
-    this.setState({visible});
   }
 
   handleInputFocus() {

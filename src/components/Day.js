@@ -22,6 +22,12 @@ export default class Day extends Component {
     onClick: PropTypes.func
   };
 
+  shouldComponentUpdate(nextProps) {
+    return nextProps.selected !== this.props.selected ||
+      nextProps.disabled !== this.props.disabled ||
+      nextProps.isCurrentMonth !== this.props.isCurrentMonth;
+  }
+
   handleClick(event) {
     event.preventDefault();
     event.stopPropagation();
@@ -31,12 +37,6 @@ export default class Day extends Component {
     if (onClick) {
       onClick(day);
     }
-  }
-
-  shouldComponentUpdate(nextProps) {
-    return nextProps.selected !== this.props.selected ||
-      nextProps.disabled !== this.props.disabled ||
-      nextProps.isCurrentMonth !== this.props.isCurrentMonth;
   }
 
   render() {
