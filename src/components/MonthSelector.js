@@ -70,7 +70,7 @@ export default class MonthSelector extends Component {
     const { year } = this.state;
     const { selectedMonth } = this.props;
 
-    return <div className="month-selector">
+    return (<div className="month-selector">
       <div className="heading">
         { persianNumber(year.format('jYYYY')) }
         <button type="button"
@@ -92,7 +92,7 @@ export default class MonthSelector extends Component {
             const buttonFingerprint = (key + 1) + '-' + year.format('jYYYY');
             const selectedMonthFingerprint = selectedMonth.format('jM-jYYYY');
             const classes = [];
-            let isCurrent = selectedMonthFingerprint === buttonFingerprint;
+            const isCurrent = selectedMonthFingerprint === buttonFingerprint;
 
             if (isCurrent) {
               classes.push('selected-month');
@@ -106,6 +106,6 @@ export default class MonthSelector extends Component {
           })
         }
       </div>
-    </div>
+    </div>);
   }
 }

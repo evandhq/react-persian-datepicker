@@ -11,6 +11,8 @@ moment.loadPersian();
 
 export default class Calendar extends Component {
   static propTypes = {
+    min: PropTypes.object,
+    max: PropTypes.object,
     selectedDay: PropTypes.object,
     defaultMonth: PropTypes.object,
     onSelect: PropTypes.func
@@ -23,20 +25,11 @@ export default class Calendar extends Component {
     setMonth: PropTypes.func.isRequired
   };
 
-  componentWillReceiveProps(nextProps) {
-    if (this.props.selectedDay !== nextProps.selectedDay) {
-      this.selectDay(nextProps.selectedDay);
-    }
-  }
-
   state = {
     month: this.props.defaultMonth || this.props.selectedDay || moment(),
     selectedDay: this.props.selectedDay || null,
     mode: 'days'
   };
-
-  days = null;
-  lastRenderedMonth = null;
 
   getChildContext() {
     return {
@@ -45,6 +38,12 @@ export default class Calendar extends Component {
       setCalendarMode: this.setMode.bind(this),
       setMonth: this.setMonth.bind(this)
     };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.selectedDay !== nextProps.selectedDay) {
+      this.selectDay(nextProps.selectedDay);
+    }
   }
 
   setMode(mode) {
@@ -83,6 +82,9 @@ export default class Calendar extends Component {
       onSelect(selectedDay);
     }
   };
+
+  days = null;
+  lastRenderedMonth = null;
 
   renderMonthSelector() {
     const { month } = this.state;
@@ -127,7 +129,7 @@ export default class Calendar extends Component {
 
   render() {
     const { ...rest } = this.props;
-    const { month, mode } = this.state;
+    const { mode } = this.state;
 
     return (<div className={'calendar'} {...rest}>
       { mode === 'monthSelector' ? this.renderMonthSelector() : this.renderDays() }
