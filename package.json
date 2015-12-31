@@ -1,6 +1,6 @@
 {
   "name": "react-persian-datepicker",
-  "version": "2.0.0",
+  "version": "2.0.3",
   "description": "A Persian date-picker component for react.js",
   "main": "lib/index.js",
   "scripts": {
@@ -29,7 +29,7 @@
   "homepage": "https://github.com/mohebifar/react-persian-datepicker#readme",
   "peerDependencies": {
     "moment-jalali": "^0.3.8",
-    "react": ">=0.14.0"
+    "react": "^0.14.0"
   },
   "devDependencies": {
     "babel": "^5.8.23",
