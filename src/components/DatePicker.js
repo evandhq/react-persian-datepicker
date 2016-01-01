@@ -47,6 +47,12 @@ export default class DatePicker extends Component {
       : ''
   };
 
+  componentWillReceiveProps(nextProps) {
+    if (this.props.value !== nextProps.value) {
+      this.handleChange(nextProps.value, false, true);
+    }
+  }
+
   setVisibility(visible) {
     if (visible) {
       this.closing = true;
@@ -56,16 +62,18 @@ export default class DatePicker extends Component {
   }
 
   handleInputChange(event) {
-    const { displayFormat } = this.props;
+    const { onChange, displayFormat } = this.props;
     const inputValue = event.target.value;
     const dateTime = moment(inputValue, displayFormat);
     this.setState({inputValue});
     if (this.handleChange(dateTime, true)) {
       this.setState({value: dateTime});
+    } else if (inputValue === '') {
+      onChange(null);
     }
   }
 
-  handleChange(date, preserveInput = false) {
+  handleChange(date, preserveInput = false, callChange = true) {
     const { onChange, displayFormat } = this.props;
 
     if (date.isValid()) {
@@ -75,7 +83,7 @@ export default class DatePicker extends Component {
         });
       }
 
-      if (onChange) {
+      if (onChange && callChange) {
         onChange(date);
       }
 
@@ -104,7 +112,7 @@ export default class DatePicker extends Component {
 
   render() {
     const { visible, inputValue, value } = this.state;
-    const { children, ...rest } = this.props;
+    const { min, max, children, ...rest } = this.props;
 
     const calendarVisibilityStyle = visible ? styles.calendarVisible : styles.calendarHidden;
     const calendarStyles = {
@@ -123,6 +131,8 @@ export default class DatePicker extends Component {
       <div style={calendarStyles}
            onClick={() => {this.closing = false;}}>
         <Calendar selectedDay={value}
+                  min={min}
+                  max={max}
                   onSelect={this.handleSelect.bind(this)}/>
       </div>
     </div>);
