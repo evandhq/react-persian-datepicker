@@ -112,7 +112,7 @@ export default class DatePicker extends Component {
 
   render() {
     const { visible, inputValue, value } = this.state;
-    const { children, ...rest } = this.props;
+    const { min, max, children, ...rest } = this.props;
 
     const calendarVisibilityStyle = visible ? styles.calendarVisible : styles.calendarHidden;
     const calendarStyles = {
@@ -131,6 +131,8 @@ export default class DatePicker extends Component {
       <div style={calendarStyles}
            onClick={() => {this.closing = false;}}>
         <Calendar selectedDay={value}
+                  min={min}
+                  max={max}
                   onSelect={this.handleSelect.bind(this)}/>
       </div>
     </div>);

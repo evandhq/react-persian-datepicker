@@ -128,7 +128,7 @@ export default class Calendar extends Component {
   }
 
   render() {
-    const { ...rest } = this.props;
+    const { min, max, ...rest } = this.props;
     const { mode } = this.state;
 
     return (<div className={'calendar'} {...rest}>
