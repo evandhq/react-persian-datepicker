@@ -78,13 +78,13 @@ export default class MonthSelector extends Component {
                 style={styles.navButton}
                 className="prev"
                 onClick={this.prevYear.bind(this)}
-                dangerouslySetInnerHTML={leftArrow}/>
+                dangerouslySetInnerHTML={rightArrow}/>
         <button type="button"
                 title="سال بعد"
                 style={styles.navButton}
                 className="next"
                 onClick={this.nextYear.bind(this)}
-                dangerouslySetInnerHTML={rightArrow}/>
+                dangerouslySetInnerHTML={leftArrow}/>
       </div>
       <div className="months-list" style={styles.wrapper}>
         {

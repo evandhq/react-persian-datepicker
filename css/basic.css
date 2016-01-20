@@ -2,7 +2,7 @@
   box-sizing: border-box;
 }
 
-.calendar {
+.calendar, .time-picker {
   border-radius: 3px;
   box-shadow: 0 3px 10px #dbdbdb;
   border: 1px solid #cccccc;
@@ -27,11 +27,11 @@
 }
 
 .calendar .heading .prev {
-  float: left;
+  float: right;
 }
 
 .calendar .heading .next {
-  float: right;
+  float: left;
 }
 
 .calendar .heading .month-button {

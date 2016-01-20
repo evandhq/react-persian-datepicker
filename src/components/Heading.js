@@ -38,13 +38,13 @@ export default class Heading extends Component {
               style={styles.button}
               className="prev"
               onClick={prevMonth}
-              dangerouslySetInnerHTML={leftArrow}/>
+              dangerouslySetInnerHTML={rightArrow}/>
       <button type="button"
               title="ماه بعد"
               style={styles.button}
               className="next"
               onClick={nextMonth}
-              dangerouslySetInnerHTML={rightArrow}/>
+              dangerouslySetInnerHTML={leftArrow}/>
     </div>);
   }
 }
