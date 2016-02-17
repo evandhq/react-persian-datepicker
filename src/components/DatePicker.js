@@ -3,8 +3,12 @@ import Calendar from './Calendar';
 import moment from 'moment-jalali';
 
 const styles = {
-  wrapper: {
+  wrapperVisible: {
     position: 'relative'
+  },
+  wrapperHidden: {
+    position: 'relative',
+    overflow: 'hidden'
   },
   calendarHidden: {
     visibility: 'hidden',
@@ -120,7 +124,9 @@ export default class DatePicker extends Component {
       ...calendarVisibilityStyle
     };
 
-    return (<div style={styles.wrapper} className="calendar-datepicker">
+    const wrapperStyles = visible ? styles.wrapperVisible : styles.wrapperHidden;
+
+    return (<div style={wrapperStyles} className="calendar-datepicker">
       <input type="text" {...rest}
              onChange={this.handleInputChange.bind(this)}
              onFocus={this.handleInputFocus.bind(this)}
