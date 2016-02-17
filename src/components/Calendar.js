@@ -56,13 +56,13 @@ export default class Calendar extends Component {
 
   nextMonth() {
     this.setState({
-      month: this.state.month.clone().add(1, 'months')
+      month: this.state.month.clone().add(1, 'jMonth')
     });
   }
 
   prevMonth() {
     this.setState({
-      month: this.state.month.clone().subtract(1, 'months')
+      month: this.state.month.clone().subtract(1, 'jMonth')
     });
   }
 
