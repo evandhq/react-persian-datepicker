@@ -1,16 +1,11 @@
-@font-face {
-    font-family: Vazir;
-    font-size: 16px;
+/*@font-face {
+    font-family: Parastoo;
+    src: url('http://rastikerdar.github.io/parastoo-font/Parastoo.eot?v=0.7');
+    src: url('http://rastikerdar.github.io/parastoo-font/Parastoo.eot?v=0.7#iefix') format('embedded-opentype'),
+    url('http://rastikerdar.github.io/parastoo-font/Parastoo.woff?v=0.7') format('woff'),
+    url('http://rastikerdar.github.io/parastoo-font/Parastoo.ttf?v=0.7') format('truetype');
     font-weight: normal;
-    src: url('//raw.githubusercontent.com/rastikerdar/vazir-font/master/Vazir.woff')
-}
-
-@font-face {
-    font-family: Vazir;
-    font-size: 16px;
-    font-weight: bold;
-    src: url('//raw.githubusercontent.com/rastikerdar/vazir-font/master/Vazir-Bold.ttf')
-}
+}*/
 
 body {
     margin: 0;
@@ -19,7 +14,7 @@ body {
 }
 
 .calendar, .calendar button {
-    font-family: Vazir;
+    font-family: Parastoo;
 }
 
 .container {
