@@ -23,7 +23,6 @@ const styles = {
   calendar: {
     position: 'absolute',
     top: '100%',
-    left: 0,
     transition: 'all .3s ease',
     zIndex: '9999'
   }
@@ -36,6 +35,7 @@ export default class DatePicker extends Component {
     children: PropTypes.node,
     min: PropTypes.object,
     max: PropTypes.object,
+    defaultMonth: PropTypes.object,
     displayFormat: PropTypes.string
   };
 
@@ -116,7 +116,7 @@ export default class DatePicker extends Component {
 
   render() {
     const { visible, inputValue, value } = this.state;
-    const { min, max, children, ...rest } = this.props;
+    const { min, max, defaultMonth, children, ...rest } = this.props;
 
     const calendarVisibilityStyle = visible ? styles.calendarVisible : styles.calendarHidden;
     const calendarStyles = {
@@ -139,6 +139,7 @@ export default class DatePicker extends Component {
         <Calendar selectedDay={value}
                   min={min}
                   max={max}
+                  defaultMonth={defaultMonth}
                   onSelect={this.handleSelect.bind(this)}/>
       </div>
     </div>);
