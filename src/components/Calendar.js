@@ -26,7 +26,7 @@ export default class Calendar extends Component {
   };
 
   state = {
-    month: this.props.defaultMonth || this.props.selectedDay || moment(),
+    month: this.props.defaultMonth || this.props.selectedDay || moment(this.props.min),
     selectedDay: this.props.selectedDay || null,
     mode: 'days'
   };
@@ -40,9 +40,13 @@ export default class Calendar extends Component {
     };
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (this.props.selectedDay !== nextProps.selectedDay) {
-      this.selectDay(nextProps.selectedDay);
+  componentWillReceiveProps({selectedDay, defaultMonth, min}) {
+    if (this.props.selectedDay !== selectedDay) {
+      this.selectDay(selectedDay);
+    } else if (defaultMonth && this.props.defaultMonth !== defaultMonth && this.state.month === this.props.defaultMonth) {
+      this.setMonth(defaultMonth);
+    } else if (min && this.props.min !== min && this.state.month.isSame(this.props.min)) {
+      this.setMonth(min.clone());
     }
   }
 
@@ -136,3 +140,4 @@ export default class Calendar extends Component {
     </div>);
   }
 }
+
