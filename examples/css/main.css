@@ -8,64 +8,69 @@
 }*/
 
 body {
-    margin: 0;
-    font-family: "Source Sans Pro", "Segoe UI", "Helvetica Neue", sans-serif;
-    background-color: #eeeeee;
+  margin: 0;
+  font-family: "Source Sans Pro", "Segoe UI", "Helvetica Neue", sans-serif;
+  background-color: #eeeeee;
 }
 
 .calendar, .calendar button {
-    font-family: Parastoo;
+  font-family: Parastoo;
 }
 
 .container {
-    max-width: 960px;
-    margin: auto;
+  max-width: 960px;
+  margin: auto;
 }
 
 .example > div {
-    float: left;
-    width: 50%;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  float: left;
+  padding-right: 30px;
+  width: 50%;
 }
 
 .example:after {
-    content: '';
-    clear: both;
-    display: block;
+  content: '';
+  clear: both;
+  display: block;
 }
 
 .result {
-    background-color: #fff;
-    box-shadow: 0 0 25px #dbdbdb;
-    border-radius: 30px;
-    padding: 10px;
-    margin: 15px auto;
-    text-align: center;
-    max-width: 300px;
+  background-color: #fff;
+  box-shadow: 0 0 25px #dbdbdb;
+  border-radius: 30px;
+  padding: 10px;
+  margin: 15px auto;
+  text-align: center;
+  max-width: 300px;
 }
 
 a {
-    color: dodgerblue;
-    text-decoration: none;
+  color: dodgerblue;
+  text-decoration: none;
 }
 
 a:hover {
-    color: #49a9ff;
+  color: #49a9ff;
 }
 
 footer {
-    text-align: center;
-    margin-top: 30px;
-    line-height: 45px;
-    background-color: #fff;
-    box-shadow: 0 2px 3px #dbdbdb;
+  text-align: center;
+  margin-top: 30px;
+  line-height: 45px;
+  background-color: #fff;
+  box-shadow: 0 2px 3px #dbdbdb;
 }
 
 input {
-    display: block;
-    width: 200px;
-    max-width: 80%;
-    border-radius: 3px;
-    line-height: 35px;
-    border: 1px solid #DCDCDC;
-    padding: 0 10px;
+  display: block;
+  /*width: 200px;*/
+  /*max-width: 80%;*/
+  border-radius: 3px;
+  line-height: 35px;
+  border: 1px solid #DCDCDC;
+  padding: 0 10px;
+  width: 100%;
 }

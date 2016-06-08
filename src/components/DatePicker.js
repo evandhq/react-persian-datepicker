@@ -1,6 +1,7 @@
-import React, { Component, PropTypes } from 'react';
+import React, {Component, PropTypes} from 'react';
 import Calendar from './Calendar';
 import moment from 'moment-jalali';
+import {remove as removeIcon} from '../utils/assets';
 
 const styles = {
   wrapperVisible: {
@@ -36,7 +37,8 @@ export default class DatePicker extends Component {
     min: PropTypes.object,
     max: PropTypes.object,
     defaultMonth: PropTypes.object,
-    displayFormat: PropTypes.string
+    displayFormat: PropTypes.string,
+    removable: PropTypes.bool
   };
 
   static defaultProps = {
@@ -66,7 +68,7 @@ export default class DatePicker extends Component {
   }
 
   handleInputChange(event) {
-    const { onChange, displayFormat } = this.props;
+    const {onChange, displayFormat} = this.props;
     const inputValue = event.target.value;
     const dateTime = moment(inputValue, displayFormat);
     this.setState({inputValue});
@@ -78,7 +80,7 @@ export default class DatePicker extends Component {
   }
 
   handleChange(date, preserveInput = false, callChange = true) {
-    const { onChange, displayFormat } = this.props;
+    const {onChange, displayFormat} = this.props;
 
     if (date.isValid()) {
       if (!preserveInput) {
@@ -114,9 +116,20 @@ export default class DatePicker extends Component {
     }, 200);
   }
 
+  removeDate() {
+    const {onChange} = this.props;
+    if (onChange) {
+      onChange('');
+    }
+    this.setState({
+      input: '',
+      inputValue: ''
+    });
+  }
+
   render() {
-    const { visible, inputValue, value } = this.state;
-    const { min, max, defaultMonth, children, ...rest } = this.props;
+    const {visible, inputValue, value} = this.state;
+    const {min, max, defaultMonth, removable, children, ...rest} = this.props;
 
     const calendarVisibilityStyle = visible ? styles.calendarVisible : styles.calendarHidden;
     const calendarStyles = {
@@ -133,7 +146,17 @@ export default class DatePicker extends Component {
              onBlur={this.handleInputBlur.bind(this)}
              value={inputValue}
              ref="formatter"/>
+
+      {
+        removable && inputValue ?
+          <button className="remove-date"
+                  type="button"
+                  onClick={this.removeDate.bind(this)}
+                  dangerouslySetInnerHTML={removeIcon}/> : null
+      }
+
       { children }
+
       <div style={calendarStyles}
            onClick={() => {this.closing = false;}}>
         <Calendar selectedDay={value}

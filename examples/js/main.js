@@ -1,4 +1,4 @@
-const { Calendar, DatePicker } = require('./../../src');
+const {Calendar, DatePicker} = require('./../../src');
 const ReactDOM = require('react/lib/ReactDOM');
 const React = require('react');
 const moment = require('moment-jalali');
@@ -13,7 +13,8 @@ const initDatePickerSample = () => {
   const el = document.getElementById('datepicker');
   ReactDOM.render(<DatePicker min={moment()}
                               onChange={date => console.log(date)}
-                              value={moment()}/>, el);
+                              value={moment()}
+                              removable={true}/>, el);
 };
 
 const initMinMaxSample = () => {
