@@ -1,4 +1,4 @@
-.calendar, .calendar * {
+.calendar, .calendar *, .calendar-datepicker, .calendar-datepicker * {
   box-sizing: border-box;
 }
 
@@ -139,4 +139,20 @@
 .months-list button.selected-month {
   background-color: #337ab7;
   color: #ffffff;
+}
+
+.calendar-datepicker button.remove-date {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  height: 20px;
+  margin-top: -10px;
+  outline: none;
+  position: absolute;
+  right: 10px;
+  top: 50%;
+}
+
+.calendar-datepicker button.remove-date svg {
+  width: 10px;
 }
