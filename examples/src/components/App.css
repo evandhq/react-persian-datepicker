@@ -1,0 +1,15 @@
+:local(.jumbotron) {
+  background-color: #216ba5;
+  color: #dedede;
+  text-align: center;
+  padding: 20px;
+}
+
+:local(.jumbotron) a {
+  color: #fff;
+  text-decoration: none;
+}
+
+:local(.examples) {
+  padding-top: 30px;
+}
