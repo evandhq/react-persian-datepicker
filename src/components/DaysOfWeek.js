@@ -15,8 +15,10 @@ const styles = {
 
 export default class DaysOfWeek extends Component {
   render() {
-    return (<div className="days-of-week">
-      { dayOfWeekNames.map((name, key) => <div style={styles.day} key={key}>{name}</div>) }
-    </div>);
+    return (
+      <div className="days-of-week">
+        { dayOfWeekNames.map((name, key) => <div style={styles.day} key={key}>{name}</div>) }
+      </div>
+    );
   }
 }
