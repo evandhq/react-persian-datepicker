@@ -51,15 +51,22 @@ export default class Day extends Component {
       className.push('current-month');
     }
 
-    return (<div className="day-wrapper"
-                 style={styles.wrapper}>
-      <button type="button"
-              onClick={this.handleClick.bind(this)}
-              disabled={disabled}
-              className={className.join(' ')}
-              style={styles.button} {...rest}>
-        { persianNumber(day.format('jD')) }
-      </button>
-    </div>);
+    return (
+      <div
+        className="day-wrapper"
+        style={styles.wrapper}
+      >
+        <button
+          type="button"
+          onClick={this.handleClick.bind(this)}
+          disabled={disabled}
+          className={className.join(' ')}
+          style={styles.button}
+          {...rest}
+        >
+          { persianNumber(day.format('jD')) }
+        </button>
+      </div>
+    );
   }
 }

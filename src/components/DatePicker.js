@@ -1,7 +1,7 @@
-import React, {Component, PropTypes} from 'react';
+import React, { Component, PropTypes } from 'react';
 import Calendar from './Calendar';
 import moment from 'moment-jalali';
-import {remove as removeIcon} from '../utils/assets';
+import { remove as removeIcon } from '../utils/assets';
 
 const styles = {
   wrapperVisible: {
@@ -64,23 +64,23 @@ export default class DatePicker extends Component {
       this.closing = true;
     }
 
-    this.setState({visible});
+    this.setState({ visible });
   }
 
   handleInputChange(event) {
-    const {onChange, displayFormat} = this.props;
+    const { onChange, displayFormat } = this.props;
     const inputValue = event.target.value;
     const dateTime = moment(inputValue, displayFormat);
-    this.setState({inputValue});
+    this.setState({ inputValue });
     if (this.handleChange(dateTime, true)) {
-      this.setState({value: dateTime});
+      this.setState({ value: dateTime });
     } else if (inputValue === '') {
       onChange(null);
     }
   }
 
   handleChange(date, preserveInput = false, callChange = true) {
-    const {onChange, displayFormat} = this.props;
+    const { onChange, displayFormat } = this.props;
 
     if (date.isValid()) {
       if (!preserveInput) {
@@ -117,7 +117,7 @@ export default class DatePicker extends Component {
   }
 
   removeDate() {
-    const {onChange} = this.props;
+    const { onChange } = this.props;
     if (onChange) {
       onChange('');
     }
@@ -128,8 +128,8 @@ export default class DatePicker extends Component {
   }
 
   render() {
-    const {visible, inputValue, value} = this.state;
-    const {min, max, defaultMonth, removable, children, ...rest} = this.props;
+    const { visible, inputValue, value } = this.state;
+    const { min, max, defaultMonth, removable, children, ...rest } = this.props;
 
     const calendarVisibilityStyle = visible ? styles.calendarVisible : styles.calendarHidden;
     const calendarStyles = {
@@ -140,12 +140,14 @@ export default class DatePicker extends Component {
     const wrapperStyles = visible ? styles.wrapperVisible : styles.wrapperHidden;
 
     return (<div style={wrapperStyles} className="calendar-datepicker">
-      <input type="text" {...rest}
-             onChange={this.handleInputChange.bind(this)}
-             onFocus={this.handleInputFocus.bind(this)}
-             onBlur={this.handleInputBlur.bind(this)}
-             value={inputValue}
-             ref="formatter"/>
+      <input
+        type="text" {...rest}
+        onChange={this.handleInputChange.bind(this)}
+        onFocus={this.handleInputFocus.bind(this)}
+        onBlur={this.handleInputBlur.bind(this)}
+        value={inputValue}
+        ref="formatter"
+      />
 
       {
         removable && inputValue ?
@@ -157,13 +159,17 @@ export default class DatePicker extends Component {
 
       { children }
 
-      <div style={calendarStyles}
-           onClick={() => {this.closing = false;}}>
-        <Calendar selectedDay={value}
-                  min={min}
-                  max={max}
-                  defaultMonth={defaultMonth}
-                  onSelect={this.handleSelect.bind(this)}/>
+      <div
+        style={calendarStyles}
+        onClick={() => {this.closing = false;}}
+      >
+        <Calendar
+          selectedDay={value}
+          min={min}
+          max={max}
+          defaultMonth={defaultMonth}
+          onSelect={this.handleSelect.bind(this)}
+        />
       </div>
     </div>);
   }

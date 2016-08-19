@@ -70,42 +70,52 @@ export default class MonthSelector extends Component {
     const { year } = this.state;
     const { selectedMonth } = this.props;
 
-    return (<div className="month-selector">
-      <div className="heading">
-        { persianNumber(year.format('jYYYY')) }
-        <button type="button"
-                title="سال قبل"
-                style={styles.navButton}
-                className="prev"
-                onClick={this.prevYear.bind(this)}
-                dangerouslySetInnerHTML={rightArrow}/>
-        <button type="button"
-                title="سال بعد"
-                style={styles.navButton}
-                className="next"
-                onClick={this.nextYear.bind(this)}
-                dangerouslySetInnerHTML={leftArrow}/>
-      </div>
-      <div className="months-list" style={styles.wrapper}>
-        {
-          months.map((name, key) => {
-            const buttonFingerprint = (key + 1) + '-' + year.format('jYYYY');
-            const selectedMonthFingerprint = selectedMonth.format('jM-jYYYY');
-            const classes = [];
-            const isCurrent = selectedMonthFingerprint === buttonFingerprint;
+    return (
+      <div className="month-selector">
+        <div className="heading">
+          { persianNumber(year.format('jYYYY')) }
+          <button
+            type="button"
+            title="سال قبل"
+            style={styles.navButton}
+            className="prev"
+            onClick={this.prevYear.bind(this)}
+            dangerouslySetInnerHTML={rightArrow}
+          />
+          <button
+            type="button"
+            title="سال بعد"
+            style={styles.navButton}
+            className="next"
+            onClick={this.nextYear.bind(this)}
+            dangerouslySetInnerHTML={leftArrow}
+          />
+        </div>
+        <div className="months-list" style={styles.wrapper}>
+          {
+            months.map((name, key) => {
+              const buttonFingerprint = (key + 1) + '-' + year.format('jYYYY');
+              const selectedMonthFingerprint = selectedMonth.format('jM-jYYYY');
+              const classes = [];
+              const isCurrent = selectedMonthFingerprint === buttonFingerprint;
 
-            if (isCurrent) {
-              classes.push('selected-month');
-            }
+              if (isCurrent) {
+                classes.push('selected-month');
+              }
 
-            return (<button className={classes.join(' ')}
-                            isCurrent={isCurrent}
-                            style={styles.button}
-                            key={key}
-                            onClick={this.handleClick.bind(this, buttonFingerprint)}>{name}</button>);
-          })
-        }
-      </div>
-    </div>);
+              return (
+                <button
+                  className={classes.join(' ')}
+                  isCurrent={isCurrent}
+                  style={styles.button}
+                  key={key}
+                  onClick={this.handleClick.bind(this, buttonFingerprint)}>
+                  {name}
+                </button>
+              );
+            })
+          }
+        </div>
+      </div>);
   }
 }
