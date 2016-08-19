@@ -150,11 +150,14 @@ export default class DatePicker extends Component {
       />
 
       {
-        removable && inputValue ?
-          <button className="remove-date"
-                  type="button"
-                  onClick={this.removeDate.bind(this)}
-                  dangerouslySetInnerHTML={removeIcon}/> : null
+        removable && inputValue ? (
+          <button
+            className="remove-date"
+            type="button"
+            onClick={this.removeDate.bind(this)}
+            dangerouslySetInnerHTML={removeIcon}
+          />
+        ) : null
       }
 
       { children }
