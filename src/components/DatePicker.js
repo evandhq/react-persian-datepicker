@@ -1,179 +1,178 @@
 import React, { Component, PropTypes } from 'react';
-import Calendar from './Calendar';
 import moment from 'moment-jalali';
-import { remove as removeIcon } from '../utils/assets';
+import TetherComponent from 'react-tether';
+import Calendar from './Calendar';
+import classnames from 'classnames';
 
-const styles = {
-  wrapperVisible: {
-    position: 'relative'
-  },
-  wrapperHidden: {
-    position: 'relative',
-    overflow: 'hidden'
-  },
-  calendarHidden: {
-    visibility: 'hidden',
-    opacity: 0,
-    transform: 'translateY(10px)'
-  },
-  calendarVisible: {
-    visibility: 'visible',
-    opacity: 1,
-    transform: 'translateY(0)'
-  },
-  calendar: {
-    position: 'absolute',
-    top: '100%',
-    transition: 'all .3s ease',
-    zIndex: '9999'
-  }
-};
+export const outsideClickIgnoreClass = 'ignore--click--outside';
 
 export default class DatePicker extends Component {
   static propTypes = {
     value: PropTypes.object,
+    defaultValue: PropTypes.object,
     onChange: PropTypes.func,
+    onFocus: PropTypes.func,
+    onBlur: PropTypes.func,
     children: PropTypes.node,
     min: PropTypes.object,
     max: PropTypes.object,
     defaultMonth: PropTypes.object,
-    displayFormat: PropTypes.string,
-    removable: PropTypes.bool
+    inputFormat: PropTypes.string,
+    removable: PropTypes.bool,
+    timePickerComponent: PropTypes.func
   };
 
   static defaultProps = {
-    displayFormat: 'jYYYY/jMM/jDD'
+    inputFormat: 'jYYYY/jM/jD'
   };
 
   state = {
-    visible: false,
-    value: this.props.value,
-    inputValue: this.props.value && typeof this.props.value === 'object' && this.props.value._isAMomentObject
-      ? this.props.value.format(this.props.displayFormat)
-      : ''
+    isOpen: false,
+    momentValue: this.props.defaultValue || null,
+    inputValue: this.props.defaultValue ?
+      this.props.defaultValue.format(this.props.inputFormat) : ''
   };
 
+  setOpen(isOpen) {
+    this.setState({ isOpen });
+  }
+
   componentWillReceiveProps(nextProps) {
-    if (this.props.value !== nextProps.value) {
-      this.handleChange(nextProps.value, false, true);
+    if ('value' in nextProps && nextProps.value !== this.props.value) {
+      this.setMomentValue(nextProps.value);
     }
   }
 
-  setVisibility(visible) {
-    if (visible) {
-      this.closing = true;
+  setMomentValue(momentValue) {
+    const { inputFormat } = this.props;
+
+    if (this.props.onChange) {
+      this.props.onChange(momentValue);
     }
 
-    this.setState({ visible });
+    const inputValue = momentValue.format(inputFormat);
+    this.setState({ momentValue, inputValue });
+  }
+
+  handleFocus() {
+    this.setOpen(true);
+  }
+
+  handleBlur(event) {
+    const { onBlur, inputFormat } = this.props;
+    const { isOpen, momentValue } = this.state;
+
+    if (isOpen) {
+      this.refs.input.focus();
+    } else if (onBlur) {
+      onBlur(event);
+    }
+
+    if (momentValue) {
+      const inputValue = momentValue.format(inputFormat);
+      this.setState({ inputValue });
+    }
+  }
+
+  handleClickOutsideCalendar() {
+    this.setOpen(false);
+  }
+
+  handleSelectDay(selectedDay) {
+    const { momentValue: oldValue } = this.state;
+    let momentValue = selectedDay.clone();
+
+    if (oldValue) {
+      momentValue = momentValue
+        .set({
+          hour: oldValue.hours(),
+          minute: oldValue.minutes(),
+          second: oldValue.seconds()
+        });
+    }
+
+    this.setMomentValue(momentValue);
   }
 
   handleInputChange(event) {
-    const { onChange, displayFormat } = this.props;
+    const { inputFormat } = this.props;
     const inputValue = event.target.value;
-    const dateTime = moment(inputValue, displayFormat);
+    const momentValue = moment(inputValue, inputFormat);
+
+    if (momentValue.isValid()) {
+      this.setState({ momentValue });
+    }
+
     this.setState({ inputValue });
-    if (this.handleChange(dateTime, true)) {
-      this.setState({ value: dateTime });
-    } else if (inputValue === '') {
-      onChange(null);
+  }
+
+  handleInputClick() {
+    if (!this.props.disabled) {
+      this.setOpen(true)
     }
   }
 
-  handleChange(date, preserveInput = false, callChange = true) {
-    const { onChange, displayFormat } = this.props;
+  renderInput() {
+    const { isOpen, inputValue } = this.state;
 
-    if (date.isValid()) {
-      if (!preserveInput) {
-        this.setState({
-          inputValue: date.format(displayFormat)
-        });
-      }
-
-      if (onChange && callChange) {
-        onChange(date);
-      }
-
-      return true;
-    }
-  }
-
-  handleSelect(date) {
-    this.setVisibility(false);
-    this.handleChange(date);
-  }
-
-  handleInputFocus() {
-    this.setVisibility(true);
-  }
-
-  handleInputBlur() {
-    setTimeout(() => {
-      if (this.closing) {
-        this.setVisibility(false);
-      } else {
-        this.closing = true;
-      }
-    }, 200);
-  }
-
-  removeDate() {
-    const { onChange } = this.props;
-    if (onChange) {
-      onChange('');
-    }
-    this.setState({
-      input: '',
-      inputValue: ''
+    const className = classnames(this.props.className, {
+      [outsideClickIgnoreClass]: isOpen
     });
+
+    return (
+      <div>
+        <input
+          className={className}
+          type="text"
+          ref="input"
+          onFocus={this.handleFocus.bind(this) }
+          onBlur={this.handleBlur.bind(this) }
+          onChange={this.handleInputChange.bind(this) }
+          onClick={this.handleInputClick.bind(this) }
+          value={inputValue}
+        />
+      </div>
+    );
+  }
+
+  renderCalendar() {
+    const { momentValue } = this.state;
+    const { timePickerComponent: TimePicker, onChange, min, max, defaultMonth } = this.props;
+
+    return (
+      <div>
+        <Calendar
+          min={min}
+          max={max}
+          selectedDay={momentValue}
+          defaultMonth={defaultMonth}
+          onSelect={this.handleSelectDay.bind(this) }
+          onClickOutside={this.handleClickOutsideCalendar.bind(this) }
+          outsideClickIgnoreClass={outsideClickIgnoreClass}
+        >
+          {
+            TimePicker ? (
+              <TimePicker
+                min={min}
+                max={max}
+                momentValue={momentValue}
+                setMomentValue={this.setMomentValue.bind(this) }
+              />
+            ) : null
+          }
+        </Calendar>
+      </div>
+    );
   }
 
   render() {
-    const { visible, inputValue, value } = this.state;
-    const { min, max, defaultMonth, removable, children, ...rest } = this.props;
+    const { isOpen } = this.state;
 
-    const calendarVisibilityStyle = visible ? styles.calendarVisible : styles.calendarHidden;
-    const calendarStyles = {
-      ...styles.calendar,
-      ...calendarVisibilityStyle
-    };
-
-    const wrapperStyles = visible ? styles.wrapperVisible : styles.wrapperHidden;
-
-    return (<div style={wrapperStyles} className="calendar-datepicker">
-      <input
-        type="text" {...rest}
-        onChange={this.handleInputChange.bind(this)}
-        onFocus={this.handleInputFocus.bind(this)}
-        onBlur={this.handleInputBlur.bind(this)}
-        value={inputValue}
-        ref="formatter"
-      />
-
-      {
-        removable && inputValue ? (
-          <button
-            className="remove-date"
-            type="button"
-            onClick={this.removeDate.bind(this)}
-            dangerouslySetInnerHTML={removeIcon}
-          />
-        ) : null
-      }
-
-      { children }
-
-      <div
-        style={calendarStyles}
-        onClick={() => {this.closing = false;}}
-      >
-        <Calendar
-          selectedDay={value}
-          min={min}
-          max={max}
-          defaultMonth={defaultMonth}
-          onSelect={this.handleSelect.bind(this)}
-        />
-      </div>
-    </div>);
+    return (
+      <TetherComponent attachment="top center">
+        { this.renderInput() }
+        { isOpen ? this.renderCalendar() : null }
+      </TetherComponent>
+    );
   }
 }
