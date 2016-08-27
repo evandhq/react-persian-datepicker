@@ -1,0 +1,156 @@
+.calendarContainer {
+  border-radius: 3px;
+  box-shadow: 0 3px 10px #dbdbdb;
+  border: 1px solid #cccccc;
+  width: 300px;
+  margin: auto;
+  text-align: center;
+  padding: 10px;
+  background-color: #fff;
+}
+
+.calendarContainer * {
+  box-sizing: border-box;
+}
+
+.calendarContainer .dayPickerContainer:after,
+.calendarContainer .monthsList:after,
+.calendarContainer .daysOfWeek:after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+/* Heading */
+.calendarContainer .heading {
+  height: 42px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.calendarContainer .heading > button {
+  border-radius: 3px;
+  background: none;
+  margin: 5px 0;
+  border: 1px solid #F7F7F7;
+  text-align: center;
+  line-height: 30px;
+  width: 36px;
+  height: 32px;
+  cursor: pointer;
+}
+
+.calendarContainer .heading > button:hover {
+  background-color: #f2f2f2;
+}
+
+.calendarContainer .heading > span {
+  line-height: 35px;
+}
+
+.calendarContainer .heading svg {
+  width: 10px;
+}
+
+.calendarContainer .heading .prev {
+  float: right;
+}
+
+.calendarContainer .heading .next {
+  float: left;
+}
+
+.calendarContainer .heading .title {
+  line-height: 32px;
+  width: 120px;
+  height: 32px;
+  font-size: 1em;
+  margin: 5px 0;
+  border: 1px solid #F7F7F7;
+  text-align: center;
+  display: inline-block;
+  font-weight: normal;
+}
+
+/* Day wrapper styles */
+.calendarContainer .dayWrapper {
+  padding: 5;
+  float: right;
+  width: 14.28571429%;
+}
+
+/* Day wrapper button styles */
+.calendarContainer .dayWrapper button {
+  border: none;
+  background: none;
+  outline: none;
+  width: 100%;
+  height: 36px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.calendarContainer .dayWrapper button:hover {
+  background-color: #eeeeff;
+}
+
+.calendarContainer .dayWrapper button[disabled] {
+  color: #aaa;
+  cursor: not-allowed;
+  background-color: #ebebeb;
+}
+
+.calendarContainer .dayWrapper button.selected {
+  background-color: #337ab7;
+  color: #ffffff;
+}
+
+.calendarContainer .dayWrapper:not(.currentMonth) button {
+  opacity: .5;
+}
+
+/* Days of week row */
+.calendarContainer .daysOfWeek {
+  border-bottom: 1px solid #EEE;
+  margin-bottom: 5px;
+  padding-bottom: 5px;
+  display: flex;
+  width: 100%;
+}
+
+.calendarContainer .daysOfWeek > div {
+  flex-grow: 1;
+  justify-content: space-between;
+}
+
+/* Month selector portion */
+.calendarContainer .monthsList {
+  clear: both;
+  width: 100%;
+}
+
+.calendarContainer .monthsList button {
+  width: 33.33333332%;
+  height: 25%;
+  float: right;
+  border: 1px solid #F9F9F9;
+  outline: none;
+  font-size: 1em;
+  background: #fff;
+  padding: 10px 0;
+  cursor: pointer;
+}
+
+.calendarContainer .monthsList button:hover {
+  background: #eeeeee;
+  cursor: pointer;
+}
+
+/* Selected state of buttons */
+.calendarContainer .selected button,
+.calendarContainer .selected button:hover,
+.calendarContainer .selected button:active,
+.calendarContainer .selected button:focus {
+  background-color: #337ab7;
+  color: #ffffff;
+}
