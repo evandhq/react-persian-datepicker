@@ -13,20 +13,19 @@ pre {
   direction: ltr;
 }
 
-.container {
+:global(.container) {
   max-width: 900px;
   margin: auto;
 }
 
-.calendar button, .github-fork-ribbon:after {
+button, :global(.github-fork-ribbon):after {
   font-family: TestFont, IRANSans, Tahoma, "Dejavu Sans", sans-serif;
 }
 
-.calendar button {
-  cursor: pointer;
-}
-
 input {
+  font-family: TestFont, IRANSans, Tahoma, "Dejavu Sans", sans-serif;
+  text-align: left;
+  direction: ltr;
   width: 100%;
   height: 35px;
   padding: 6px 12px;

@@ -19,8 +19,7 @@ module.exports = {
   context: __dirname,
   entry: [
     './examples/src/main.js',
-    './examples/src/main.css',
-    './css/basic.css'
+    './examples/src/main.css'
   ],
   resolve: {
     modulesDirectories: [
@@ -38,6 +37,12 @@ module.exports = {
       },
       {
         test: /\.css?$/,
+        exclude: /node_modules/,
+        loader: 'style!css?modules&importLoaders=1'
+      },
+      {
+        test: /\.css?$/,
+        include: /node_modules/,
         loader: 'style!css'
       }
     ]

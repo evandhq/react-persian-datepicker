@@ -13,14 +13,16 @@
   padding-bottom: 10px;
 }
 
-:local(.row) {
-  display: flex;
-  flex-wrap: nowrap;
+:local(.row):after {
+  content: '';
+  clear: both;
+  display: block;
 }
 
 :local(.row) > div {
-  flex-basis: 50%;
+  width: 50%;
   padding: 13px 0;
+  float: right;
 }
 
 :local(.row) > :local(.description) {
@@ -28,9 +30,11 @@
 }
 
 pre {
+  background-color: #F5F8FB !important;
   padding: 20px 10px !important;
   margin: 0 0 20px -20px;
   border-radius: 0 3px 3px 0;
   border-top: 1px solid #d8e4ef;
   border-bottom: 1px solid #d8e4ef;
+  border-right: 1px solid #d8e4ef;
 }
