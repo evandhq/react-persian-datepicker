@@ -165,6 +165,17 @@ export default class DatePicker extends Component {
     );
   }
 
+  removeDate() {
+    const {onChange} = this.props;
+    if (onChange) {
+      onChange('');
+    }
+    this.setState({
+      input: '',
+      inputValue: ''
+    });
+  }
+
   render() {
     const { isOpen } = this.state;
 
