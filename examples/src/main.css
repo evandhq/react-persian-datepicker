@@ -1,0 +1,39 @@
+body {
+  font-family: TestFont, IRANSans, Tahoma, "Dejavu Sans", sans-serif;
+  margin: 0;
+  padding: 0;
+  direction: rtl;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+pre {
+  direction: ltr;
+}
+
+:global(.container) {
+  max-width: 900px;
+  margin: auto;
+}
+
+button, :global(.github-fork-ribbon):after {
+  font-family: TestFont, IRANSans, Tahoma, "Dejavu Sans", sans-serif;
+}
+
+input {
+  font-family: TestFont, IRANSans, Tahoma, "Dejavu Sans", sans-serif;
+  text-align: left;
+  direction: ltr;
+  width: 100%;
+  height: 35px;
+  padding: 6px 12px;
+  background-color: #fff;
+  background-image: none;
+  border: 1px solid #eee;
+  border-radius: 3px;
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+  -webkit-transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+  transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}

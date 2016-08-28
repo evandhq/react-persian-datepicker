@@ -1,12 +1,9 @@
 import React, { Component, PropTypes } from 'react';
+import classnames from 'classnames';
 import { persianNumber } from '../utils/persian';
 
 const styles = {
-  wrapper: {
-    padding: 5,
-    float: 'right',
-    width: '14.28571429%'
-  },
+  wrapper: {},
   button: {
     outline: 'none',
     cursor: 'pointer'
@@ -40,26 +37,24 @@ export default class Day extends Component {
   }
 
   render() {
-    const { day, disabled, selected, isCurrentMonth, onClick, ...rest } = this.props;
-    const className = [];
+    const { day, disabled, selected, isCurrentMonth, onClick, styles, ...rest } = this.props;
 
-    if (selected) {
-      className.push('selected');
-    }
+    const className = classnames(styles.dayWrapper, {
+      [styles.selected]: selected,
+      [styles.currentMonth]: isCurrentMonth
+    });
 
-    if (isCurrentMonth) {
-      className.push('current-month');
-    }
-
-    return (<div className="day-wrapper"
-                 style={styles.wrapper}>
-      <button type="button"
-              onClick={this.handleClick.bind(this)}
-              disabled={disabled}
-              className={className.join(' ')}
-              style={styles.button} {...rest}>
-        { persianNumber(day.format('jD')) }
-      </button>
-    </div>);
+    return (
+      <div className={className}>
+        <button
+          type="button"
+          onClick={this.handleClick.bind(this) }
+          disabled={disabled}
+          {...rest}
+        >
+          { persianNumber(day.format('jD')) }
+        </button>
+      </div>
+    );
   }
 }

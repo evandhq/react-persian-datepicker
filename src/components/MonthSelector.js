@@ -1,7 +1,9 @@
 import React, { Component, PropTypes } from 'react';
+import moment from 'moment-jalali';
+import classnames from 'classnames';
+import MonthsViewHeading from './MonthsViewHeading';
 import { persianNumber } from '../utils/persian';
 import { leftArrow, rightArrow } from '../utils/assets';
-import moment from 'moment-jalali';
 
 // List of months
 const months = [
@@ -19,23 +21,9 @@ const months = [
   'اسفند'
 ];
 
-const styles = {
-  wrapper: {
-    width: '100%',
-    clear: 'both'
-  },
-  button: {
-    float: 'right',
-    width: '33.33333333%',
-    height: '25%'
-  },
-  navButton: {
-    outline: 'none'
-  }
-};
-
 export default class MonthSelector extends Component {
   static propTypes = {
+    styles: PropTypes.object,
     selectedMonth: PropTypes.object.isRequired
   };
 
@@ -68,44 +56,37 @@ export default class MonthSelector extends Component {
 
   render() {
     const { year } = this.state;
-    const { selectedMonth } = this.props;
+    const { selectedMonth, styles } = this.props;
 
-    return (<div className="month-selector">
-      <div className="heading">
-        { persianNumber(year.format('jYYYY')) }
-        <button type="button"
-                title="سال قبل"
-                style={styles.navButton}
-                className="prev"
-                onClick={this.prevYear.bind(this)}
-                dangerouslySetInnerHTML={rightArrow}/>
-        <button type="button"
-                title="سال بعد"
-                style={styles.navButton}
-                className="next"
-                onClick={this.nextYear.bind(this)}
-                dangerouslySetInnerHTML={leftArrow}/>
-      </div>
-      <div className="months-list" style={styles.wrapper}>
-        {
-          months.map((name, key) => {
-            const buttonFingerprint = (key + 1) + '-' + year.format('jYYYY');
-            const selectedMonthFingerprint = selectedMonth.format('jM-jYYYY');
-            const classes = [];
-            const isCurrent = selectedMonthFingerprint === buttonFingerprint;
+    return (
+      <div className="month-selector">
+        <MonthsViewHeading
+          styles={styles}
+          year={year}
+          onNextYear={this.nextYear.bind(this) }
+          onPrevYear={this.prevYear.bind(this) }
+        />
+        <div className={styles.monthsList}>
+          {
+            months.map((name, key) => {
+              const buttonFingerprint = (key + 1) + '-' + year.format('jYYYY');
+              const selectedMonthFingerprint = selectedMonth.format('jM-jYYYY');
+              const isCurrent = selectedMonthFingerprint === buttonFingerprint;
 
-            if (isCurrent) {
-              classes.push('selected-month');
-            }
+              const className = classnames(styles.monthWrapper, {
+                [styles.selected]: isCurrent
+              });
 
-            return (<button className={classes.join(' ')}
-                            isCurrent={isCurrent}
-                            style={styles.button}
-                            key={key}
-                            onClick={this.handleClick.bind(this, buttonFingerprint)}>{name}</button>);
-          })
-        }
-      </div>
-    </div>);
+              return (
+                <div key={key} className={className}>
+                  <button onClick={this.handleClick.bind(this, buttonFingerprint)}>
+                    {name}
+                  </button>
+                </div>
+              );
+            })
+          }
+        </div>
+      </div>);
   }
 }
