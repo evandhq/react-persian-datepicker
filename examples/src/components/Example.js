@@ -1,7 +1,6 @@
 import React, { PropTypes, Component } from 'react';
 import styles from './Example.css';
 import Highlight from 'react-syntax-highlight';
-import { vs } from 'react-syntax-highlighter/dist/styles';
 require('highlight.js/styles/github.css');
 
 export default class Example extends Component {
