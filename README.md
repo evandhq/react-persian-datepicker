@@ -2,7 +2,7 @@
 
 [Persian calendar](https://en.wikipedia.org/wiki/Solar_Hijri_calendar) and date picker components for [React](https://facebook.github.io/react/). This is an open source project made in [@evandhq](https://github.com/evandhq) team.
 
-[See the demo.](evandhq.github.io/react-persian-datepicker)
+[See the demo.](https://evandhq.github.io/react-persian-datepicker)
 
 # Installation
 
