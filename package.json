@@ -41,7 +41,7 @@
     "babel-preset-react": "^6.11.1",
     "babel-preset-stage-0": "^6.5.0",
     "css-loader": "^0.23.1",
-    "rc-time-picker-evand": "^2.0.2",
+    "rc-time-picker-evand": "^3.1.0",
     "react-syntax-highlight": "0.0.2",
     "style-loader": "^0.13.1",
     "webpack": "^1.13.1",
