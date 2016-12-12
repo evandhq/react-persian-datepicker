@@ -20,12 +20,14 @@ export default class DatePicker extends Component {
     inputFormat: PropTypes.string,
     removable: PropTypes.bool,
     timePickerComponent: PropTypes.func,
-    calendarStyles: PropTypes.object
+    calendarStyles: PropTypes.object,
+    calendarContainerProps: PropTypes.object
   };
 
   static defaultProps = {
     inputFormat: 'jYYYY/jM/jD',
-    calendarStyles: require('../styles/basic.css')
+    calendarStyles: require('../styles/basic.css'),
+    calendarContainerProps: {}
   };
 
   state = {
@@ -139,7 +141,7 @@ export default class DatePicker extends Component {
 
   renderCalendar() {
     const { momentValue } = this.state;
-    const { timePickerComponent: TimePicker, onChange, min, max, defaultMonth, calendarStyles } = this.props;
+    const { timePickerComponent: TimePicker, onChange, min, max, defaultMonth, calendarStyles, calendarContainerProps } = this.props;
 
     return (
       <div>
@@ -152,6 +154,7 @@ export default class DatePicker extends Component {
           onClickOutside={this.handleClickOutsideCalendar.bind(this) }
           outsideClickIgnoreClass={outsideClickIgnoreClass}
           styles={calendarStyles}
+          containerProps={calendarContainerProps}
         >
           {
             TimePicker ? (

@@ -18,7 +18,8 @@ export class Calendar extends Component {
     selectedDay: PropTypes.object,
     defaultMonth: PropTypes.object,
     onSelect: PropTypes.func,
-    onClickOutside: PropTypes.func
+    onClickOutside: PropTypes.func,
+    containerProps: PropTypes.object
   };
 
   static childContextTypes = {
@@ -29,7 +30,8 @@ export class Calendar extends Component {
   };
 
   static defaultProps = {
-    styles: require('../styles/basic.css')
+    styles: require('../styles/basic.css'),
+    containerProps: {}
   };
 
   state = {
@@ -163,13 +165,12 @@ export class Calendar extends Component {
       onClickOutside,
       outsideClickIgnoreClass,
       styles,
-      className,
-      ...rest
+      className
     } = this.props;
     const { mode } = this.state;
 
     return (
-      <div className={styles.calendarContainer + ' ' + className} {...rest}>
+      <div className={styles.calendarContainer + ' ' + className}>
         { mode === 'monthSelector' ? this.renderMonthSelector() : this.renderDays() }
       </div>
     );
