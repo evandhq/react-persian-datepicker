@@ -4,6 +4,14 @@
 
 [See the demo.](https://evandhq.github.io/react-persian-datepicker)
 
+<p dir="rtl">
+<strong>React Persian Date Picker</strong> مجموعه‌ای از کامپوننت‌های ReactJS مورد نیاز جهت ایجاد ورود و نمایش تاریخ هجری شمسی است. این نرم‌افزار متن‌باز در ایوند توسعه یافته‌است.
+</p>
+
+<p dir="rtl">
+  <a href="https://evandhq.github.io/react-persian-datepicker">نسخه نمایشی را اینجا ببینید.</a>
+</p>
+
 # Installation
 
 Use npm to install the package:
