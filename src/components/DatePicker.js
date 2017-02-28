@@ -54,7 +54,9 @@ export default class DatePicker extends Component {
       this.props.onChange(momentValue);
     }
 
-    const inputValue = momentValue.format(inputFormat);
+    let inputValue = "";
+    if (momentValue)
+      inputValue = momentValue.format(inputFormat);
     this.setState({ momentValue, inputValue });
   }
 
@@ -117,7 +119,13 @@ export default class DatePicker extends Component {
   }
 
   renderInput() {
-    const { isOpen, inputValue } = this.state;
+    let { isOpen, inputValue } = this.state;
+
+    if (this.props.value) {
+      let value = this.props.value;
+      let inputFormat = this.props.inputFormat;
+      inputValue = value.format(inputFormat);
+    }
 
     const className = classnames(this.props.className, {
       [outsideClickIgnoreClass]: isOpen

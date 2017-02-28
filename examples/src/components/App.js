@@ -14,7 +14,8 @@ const generateRandomMoment = () => {
 
 export default class App extends Component {
   state = {
-    value: moment()
+    value: moment(),
+    someValue: new moment()
   };
 
   render() {
@@ -45,6 +46,23 @@ export default class App extends Component {
               code={basicDatePickerCode}
             >
               <DatePicker />
+            </Example>
+          </div>
+          <div>
+            <Example
+              title="ورود تاریخ کنترل شده"
+              code={clearDatePickerCode}
+            >
+              <DatePicker
+                value={this.state.someValue}
+                x={true}
+                onChange={value => this.setState({ someValue: value })}
+              />
+              <div style={{ paddingTop: 15 }}>
+                <button onClick={() => this.setState({ someValue: null }) }>
+                  حذف مقدار
+                </button>
+              </div>
             </Example>
           </div>
           <div>
@@ -100,6 +118,21 @@ export default class App extends Component {
 
 const basicDatePickerCode = `render() {
   return <DatePicker />;
+}`;
+
+
+const clearDatePickerCode = `render() {
+  return (
+    <div>
+      <DatePicker
+        value={this.state.value}
+        onChange={value => this.setState({ value })}
+      />
+      <button onClick={() => this.setState({ value: null }) }>
+        حذف مقدار
+      </button>
+    </div>
+  );
 }`;
 
 const controlledDatePickerCode = `render() {
