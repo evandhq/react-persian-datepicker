@@ -3,6 +3,7 @@ import moment from 'moment-jalali';
 import TetherComponent from 'react-tether';
 import Calendar from './Calendar';
 import classnames from 'classnames';
+import { defaultStyles } from './DefaultStyles';
 
 export const outsideClickIgnoreClass = 'ignore--click--outside';
 
@@ -26,7 +27,7 @@ export default class DatePicker extends Component {
 
   static defaultProps = {
     inputFormat: 'jYYYY/jM/jD',
-    styles: require('../styles/basic.css'),
+    styles: { ...defaultStyles, ...require('../styles/basic.css') },
     calendarContainerProps: {}
   };
 
