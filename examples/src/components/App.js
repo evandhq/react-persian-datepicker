@@ -55,7 +55,6 @@ export default class App extends Component {
             >
               <DatePicker
                 value={this.state.someValue}
-                x={true}
                 onChange={value => this.setState({ someValue: value })}
               />
               <div style={{ paddingTop: 15 }}>
