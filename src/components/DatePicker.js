@@ -144,7 +144,7 @@ export default class DatePicker extends Component {
   renderCalendar() {
     const { momentValue } = this.state;
     const { timePickerComponent: TimePicker, onChange, min, max, defaultMonth, calendarStyles, calendarContainerProps } = this.props;
-    const styles = {  ...this.props.styles, ...calendarStyles };
+    const styles = this.props.styles || calendarStyles;
 
     return (
       <div>
