@@ -49,6 +49,7 @@ export class Calendar extends Component {
     };
   }
 
+
   componentWillReceiveProps({ selectedDay, defaultMonth, min }) {
     if (this.props.selectedDay !== selectedDay) {
       this.selectDay(selectedDay);
@@ -110,12 +111,12 @@ export class Calendar extends Component {
   renderMonthSelector() {
     const { month } = this.state;
     const { styles } = this.props;
-    return (<MonthSelector styles={styles} selectedMonth={month}/>);
+    return (<MonthSelector styles={styles} selectedMonth={month} />);
   }
 
   renderDays() {
     const { month, selectedDay } = this.state;
-    const { children, min, max, styles, outsideClickIgnoreClass } = this.props;
+    const { children, min, max, styles, outsideClickIgnoreClass, selectedDays } = this.props;
 
     let days;
 
@@ -130,14 +131,26 @@ export class Calendar extends Component {
     return (
       <div>
         {children}
-        <DaysViewHeading styles={styles} month={month}/>
-        <DaysOfWeek styles={styles}/>
+        <DaysViewHeading styles={styles} month={month} />
+        <DaysOfWeek styles={styles} />
         <div className={styles.dayPickerContainer}>
           {
             days.map(day => {
               const isCurrentMonth = day.format('jMM') === month.format('jMM');
               const disabled = (min ? day.isBefore(min) : false) || (max ? day.isAfter(max) : false);
-              const selected = selectedDay ? selectedDay.isSame(day, 'day') : false;
+              let selected = false;
+
+              if (selectedDay && selectedDay.isSame(day, 'day')) {
+                selected = true;
+              }
+
+              if (selectedDays && selectedDays.length > 0) {
+                selectedDays.forEach(sDay => {
+                  if (sDay.isSame(day, 'day')) {
+                    selected = true;
+                  }
+                });
+              }
 
               return (
                 <Day
@@ -168,6 +181,7 @@ export class Calendar extends Component {
       className
     } = this.props;
     const { mode } = this.state;
+    console.log(this.props);
 
     return (
       <div className={styles.calendarContainer + ' ' + className}>

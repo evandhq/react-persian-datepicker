@@ -21,13 +21,16 @@ export default class DatePicker extends Component {
     removable: PropTypes.bool,
     timePickerComponent: PropTypes.func,
     calendarStyles: PropTypes.object,
-    calendarContainerProps: PropTypes.object
+    calendarContainerProps: PropTypes.object,
+    selectedDays: PropTypes.array
   };
 
   static defaultProps = {
     inputFormat: 'jYYYY/jM/jD',
     calendarStyles: require('../styles/basic.css'),
-    calendarContainerProps: {}
+    calendarContainerProps: {},
+    selectedDays: [moment(), moment().subtract(1, 'days')]
+
   };
 
   state = {
@@ -114,7 +117,7 @@ export default class DatePicker extends Component {
 
   handleInputClick() {
     if (!this.props.disabled) {
-      this.setOpen(true)
+      this.setOpen(true);
     }
   }
 
@@ -149,7 +152,7 @@ export default class DatePicker extends Component {
 
   renderCalendar() {
     const { momentValue } = this.state;
-    const { timePickerComponent: TimePicker, onChange, min, max, defaultMonth, calendarStyles, calendarContainerProps } = this.props;
+    const { timePickerComponent: TimePicker, selectedDays, onChange, min, max, defaultMonth, calendarStyles, calendarContainerProps } = this.props;
 
     return (
       <div>
@@ -163,6 +166,7 @@ export default class DatePicker extends Component {
           outsideClickIgnoreClass={outsideClickIgnoreClass}
           styles={calendarStyles}
           containerProps={calendarContainerProps}
+          selectedDays={selectedDays}
         >
           {
             TimePicker ? (
@@ -180,7 +184,7 @@ export default class DatePicker extends Component {
   }
 
   removeDate() {
-    const {onChange} = this.props;
+    const { onChange } = this.props;
     if (onChange) {
       onChange('');
     }
@@ -200,4 +204,4 @@ export default class DatePicker extends Component {
       </TetherComponent>
     );
   }
-}
+};
