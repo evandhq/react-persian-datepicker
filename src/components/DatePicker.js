@@ -29,7 +29,7 @@ export default class DatePicker extends Component {
     inputFormat: 'jYYYY/jM/jD',
     calendarStyles: require('../styles/basic.css'),
     calendarContainerProps: {},
-    selectedDays: [moment(), moment().subtract(1, 'days')]
+    selectedDays: []
 
   };
 

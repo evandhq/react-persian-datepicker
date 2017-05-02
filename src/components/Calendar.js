@@ -181,7 +181,6 @@ export class Calendar extends Component {
       className
     } = this.props;
     const { mode } = this.state;
-    console.log(this.props);
 
     return (
       <div className={styles.calendarContainer + ' ' + className}>
