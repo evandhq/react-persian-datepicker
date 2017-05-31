@@ -12,6 +12,7 @@ const initBasicSample = () => {
 const initDatePickerSample = () => {
   const el = document.getElementById('datepicker');
   ReactDOM.render(<DatePicker min={moment()}
+                              selectedDays={[moment(), moment().add('days', 1)]}
                               onChange={date => console.log(date)}
                               value={moment()}
                               removable={true}/>, el);

@@ -38,7 +38,8 @@ export default class DatePicker extends Component {
     max: PropTypes.object,
     defaultMonth: PropTypes.object,
     displayFormat: PropTypes.string,
-    removable: PropTypes.bool
+    removable: PropTypes.bool,
+    selectedDays: PropTypes.array
   };
 
   static defaultProps = {
@@ -129,7 +130,7 @@ export default class DatePicker extends Component {
 
   render() {
     const {visible, inputValue, value} = this.state;
-    const {min, max, defaultMonth, removable, children, ...rest} = this.props;
+    const {min, max, defaultMonth, removable, children, selectedDays, ...rest} = this.props;
 
     const calendarVisibilityStyle = visible ? styles.calendarVisible : styles.calendarHidden;
     const calendarStyles = {
@@ -163,7 +164,9 @@ export default class DatePicker extends Component {
                   min={min}
                   max={max}
                   defaultMonth={defaultMonth}
+                  selectedDays={selectedDays}
                   onSelect={this.handleSelect.bind(this)}/>
+
       </div>
     </div>);
   }

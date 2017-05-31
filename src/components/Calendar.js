@@ -14,6 +14,7 @@ export default class Calendar extends Component {
     min: PropTypes.object,
     max: PropTypes.object,
     selectedDay: PropTypes.object,
+    selectedDays: PropTypes.array,
     defaultMonth: PropTypes.object,
     onSelect: PropTypes.func
   };
@@ -97,7 +98,7 @@ export default class Calendar extends Component {
 
   renderDays() {
     const { month, selectedDay } = this.state;
-    const { min, max } = this.props;
+    const { min, max, selectedDays } = this.props;
     let days;
 
     if (this.lastRenderedMonth === month) {
@@ -116,7 +117,19 @@ export default class Calendar extends Component {
           days.map(day => {
             const isCurrentMonth = day.format('jMM') === month.format('jMM');
             const disabled = (min ? day.isBefore(min) : false) || (max ? day.isAfter(max) : false);
-            const selected = selectedDay ? selectedDay.isSame(day, 'day') : false;
+            let selected = false;
+
+            if (selectedDay && selectedDay.isSame(day, 'day')) {
+              selected = true;
+            }
+
+            if (selectedDays && selectedDays.length > 0) {
+              selectedDays.forEach(sDay => {
+                if (sDay.isSame(day, 'day')) {
+                  selected = true;
+                }
+              });
+            }
 
             return (<Day
               key={day.format('YYYYMMDD')}
