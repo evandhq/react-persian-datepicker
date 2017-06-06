@@ -15,6 +15,7 @@ export default class Calendar extends Component {
     max: PropTypes.object,
     selectedDay: PropTypes.object,
     selectedDays: PropTypes.array,
+    disableDays: PropTypes.array,
     defaultMonth: PropTypes.object,
     onSelect: PropTypes.func
   };
@@ -41,7 +42,7 @@ export default class Calendar extends Component {
     };
   }
 
-  componentWillReceiveProps({selectedDay, defaultMonth, min}) {
+  componentWillReceiveProps({ selectedDay, defaultMonth, min }) {
     if (this.props.selectedDay !== selectedDay) {
       this.selectDay(selectedDay);
     } else if (defaultMonth && this.props.defaultMonth !== defaultMonth && this.state.month === this.props.defaultMonth) {
@@ -52,11 +53,11 @@ export default class Calendar extends Component {
   }
 
   setMode(mode) {
-    this.setState({mode});
+    this.setState({ mode });
   }
 
   setMonth(month) {
-    this.setState({month});
+    this.setState({ month });
   }
 
   nextMonth() {
@@ -74,10 +75,10 @@ export default class Calendar extends Component {
   selectDay(selectedDay) {
     const { month } = this.state;
     if (selectedDay.format('jYYYYjMM') !== month.format('jYYYYjMM')) {
-      this.setState({month: selectedDay});
+      this.setState({ month: selectedDay });
     }
 
-    this.setState({selectedDay});
+    this.setState({ selectedDay });
   }
 
   handleClickOnDay = selectedDay => {
@@ -98,7 +99,7 @@ export default class Calendar extends Component {
 
   renderDays() {
     const { month, selectedDay } = this.state;
-    const { min, max, selectedDays } = this.props;
+    const { min, max, selectedDays, disableDays } = this.props;
     let days;
 
     if (this.lastRenderedMonth === month) {
@@ -116,8 +117,20 @@ export default class Calendar extends Component {
         {
           days.map(day => {
             const isCurrentMonth = day.format('jMM') === month.format('jMM');
-            const disabled = (min ? day.isBefore(min) : false) || (max ? day.isAfter(max) : false);
+            let disabled = false;
             let selected = false;
+
+            if ((min ? day.isBefore(min) : false) || (max ? day.isAfter(max) : false)) {
+              disabled = true;
+            }
+
+            if (disableDays && disableDays.length > 0) {
+              disableDays.forEach(dDay => {
+                if (dDay.isSame(day, 'day')) {
+                  disabled = true;
+                }
+              });
+            }
 
             if (selectedDay && selectedDay.isSame(day, 'day')) {
               selected = true;
