@@ -49,5 +49,3 @@ const MyComponent = () => (
 ```
 
 For more examples [take a look at here](https://github.com/evandhq/react-persian-datepicker/blob/master/examples/src/components/App.js#L43).
-
-Note that you need `css-loader` for `/\.css$/` files enabled to have the styles working as we use css modules to put classnames in place. Otherwise, you'll have to pass an object of class names (like a css module) as `styles` prop. This way, you can develop your own stylesheet for the calendar according to the [basic one](https://github.com/evandhq/react-persian-datepicker/blob/master/src/styles/basic.css). The only thing that you will need to do is to require the css file that you made and pass it as `styles` prop to either `Calendar` or `DatePicker`.
