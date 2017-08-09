@@ -50,6 +50,13 @@ export default class App extends Component {
           </div>
           <div>
             <Example
+              title="ورودی تاریخ ساده بسته شدن خودکار"
+              code={basicAutoDatePickerCode}>
+              <DatePicker closeOnSelect/>
+            </Example>
+          </div>
+          <div>
+            <Example
               title="ورود تاریخ کنترل شده"
               code={clearDatePickerCode}
             >
@@ -117,6 +124,10 @@ export default class App extends Component {
 
 const basicDatePickerCode = `render() {
   return <DatePicker />;
+}`;
+
+const basicAutoDatePickerCode = `render() {
+  return <DatePicker closeOnSelect/>;
 }`;
 
 

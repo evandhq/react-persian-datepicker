@@ -22,13 +22,15 @@ export default class DatePicker extends Component {
     removable: PropTypes.bool,
     timePickerComponent: PropTypes.func,
     calendarStyles: PropTypes.object,
-    calendarContainerProps: PropTypes.object
+    calendarContainerProps: PropTypes.object,
+    closeOnSelect: PropTypes.bool
   };
 
   static defaultProps = {
     inputFormat: 'jYYYY/jM/jD',
     calendarStyles: require('../styles/basic.css'),
-    calendarContainerProps: {}
+    calendarContainerProps: {},
+    closeOnSelect: false
   };
 
   state = {
@@ -99,6 +101,7 @@ export default class DatePicker extends Component {
     }
 
     this.setMomentValue(momentValue);
+    this.setState({isOpen: !this.props.closeOnSelect})
   }
 
   handleInputChange(event) {
