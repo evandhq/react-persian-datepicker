@@ -54,6 +54,7 @@
   "dependencies": {
     "classnames": "^2.2.5",
     "moment-jalali": "^0.3.9",
+    "prop-types": "^15.5.10",
     "rc-trigger": "^1.7.2",
     "react-onclickoutside": "^5.3.3",
     "react-tether": "^0.5.2"
