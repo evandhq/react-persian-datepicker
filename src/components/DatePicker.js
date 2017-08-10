@@ -151,7 +151,10 @@ export default class DatePicker extends Component {
   renderCalendar() {
     const { momentValue } = this.state;
     const { timePickerComponent: TimePicker, onChange, min, max, defaultMonth, calendarStyles, calendarContainerProps } = this.props;
-
+    const updatedProps = {...calendarContainerProps,
+      onSelect: (selected) => {this.handleSelectDay.bind(this)(selected); calendarContainerProps.hasOwnProperty('onSelect') && calendarContainerProps.onSelect(selected)},
+      onClickOutside: () => {this.handleClickOutsideCalendar(); calendarContainerProps.hasOwnProperty('onClickOutside') && calendarContainerProps.onClickOutside()}
+    }
     return (
       <div>
         <Calendar
@@ -163,8 +166,7 @@ export default class DatePicker extends Component {
           onClickOutside={this.handleClickOutsideCalendar.bind(this) }
           outsideClickIgnoreClass={outsideClickIgnoreClass}
           styles={calendarStyles}
-          containerProps={calendarContainerProps}
-        >
+          {...updatedProps}>
           {
             TimePicker ? (
               <TimePicker
