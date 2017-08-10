@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import moment from 'moment-jalali';
 import TetherComponent from 'react-tether';
 import Calendar from './Calendar';
