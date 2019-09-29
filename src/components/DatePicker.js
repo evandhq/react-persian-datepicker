@@ -67,17 +67,17 @@ export default class DatePicker extends Component {
 
   handleBlur(event) {
     const { onBlur, inputFormat } = this.props;
-    const { isOpen, momentValue } = this.state;
+    const { momentValue } = this.state;
 
-    if (isOpen) {
-      this.refs.input.focus();
-    } else if (onBlur) {
+    if (onBlur) {
       onBlur(event);
     }
 
     if (momentValue) {
       const inputValue = momentValue.format(inputFormat);
-      this.setState({ inputValue });
+      this.setState({ inputValue, isOpen: false });
+    } else {
+      this.setOpen(false);
     }
   }
 
